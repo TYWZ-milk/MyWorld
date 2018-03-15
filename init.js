@@ -13,9 +13,6 @@ var objects = [];
 
 init();
 
-
-
-
 function init(){
 
     container = document.createElement( 'div' );//使用createElement创建一个div，就是整个页面
@@ -101,12 +98,6 @@ function method3(){
     cubeGeo = new THREE.CubeGeometry( 50, 100, 50 );
     cubeMaterial = new THREE.MeshLambertMaterial( { color: 0x4D662D/*, map: new THREE.TextureLoader().load( "textures/square-outline-textured.png" )*/ } );
 }
-function method4(){
-    methodfollow4();
-    // 实体对象，就是鼠标点击确定之后的实体对象，并且实体对象的图片引入
-    cubeGeo = new THREE.CylinderBufferGeometry( 25,25, 100, 50 ,50);
-    cubeMaterial = new THREE.MeshLambertMaterial( { color: 0x4D662D/*, map: new THREE.TextureLoader().load( "textures/square-outline-textured.png" )*/ } );
-}
 function method5(){
     window.open("newwindows.html","_blank","resizable=yes,scrollbars=yes,titlebar=yes,windth=800,height=800");
 }
@@ -133,18 +124,6 @@ function methodfollow3(){
     scene.add( rollOverMesh );
     //最后把该立方体对象添加到场景scene中
 }
-function methodfollow4(){
-    scene.remove(rollOverMesh);
-    // 这个几何对象是鼠标在移动时候，跟随鼠标显示的几何对象
-    rollOverGeo = new THREE.CylinderGeometry( 25,25 ,100, 50,50 );//创建一个盒状几何对象
-    rollOverMaterial = new THREE.MeshBasicMaterial( { color: 0xff0000, opacity: 0.5, transparent: true } );
-    //创建一个色彩为红色的材料，透明度为半透明
-    rollOverMesh = new THREE.Mesh( rollOverGeo, rollOverMaterial );
-    //通过mesh方法把颜色应用到几何对象上
-    scene.add( rollOverMesh );
-    //最后把该立方体对象添加到场景scene中
-}
-
 
 function onWindowResize() {
 
