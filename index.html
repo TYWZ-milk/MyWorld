@@ -19,17 +19,21 @@
     </style>
 </head>
 <body>
-<a>正方体</a>
-<img src="textures/zhengfangti.png">
-<a>球体</a>
-<img src="textures/qiuti.png">
-<a>长方体</a>
-<img src="textures/changfangti.png">
-<a>圆柱体</a>
-<img src="textures/yuanzhuti.png">
+计算机图形学作业：简单模拟我的世界<br><strong>shift + click</strong>：移除图形<br>
+<button class="btn1" onclick="cubeBuild('brick')">砖块</button>
+<button class="btn1" onclick="cubeBuild('bookshelf')">书架</button>
+<button class="btn1" onclick="cubeBuild('stonewall')">石墙</button>
+<button class="btn1" onclick="planeBuild('water')">水</button>
+<button class="btn1" onclick="planeBuild('woodfloor')">木地板</button>
+<button class="btn2" onclick="method2()">球体</button>
+<button class="btn3" onclick="method3()">长方体</button>
+<button class="btn4" onclick="method4()">圆柱体</button>
+<button class="btn5" onclick="method5()">预览</button>
 <script src="js/three.js"></script>
 <script src="js/Detector.js"></script>
 <script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/OrbitControls.js"></script>
 <script src="init.js"></script>
+<script src="model.js"></script>
 </body>
 </html>
