@@ -3,6 +3,8 @@
  */
 //把创建鼠标跟随几何图形和实体图形都抽象成函数，通过点击事件进行调用
 function cubeBuild(cube){
+    changeDirection = false;
+    rotcontrols.detach(selected);
     cubeFollow();
     // 实体对象，就是鼠标点击确定之后的实体对象，并且实体对象的图片引入
     cubeGeo = new THREE.BoxGeometry( 50, 50, 50 );
@@ -16,6 +18,8 @@ function cubeBuild(cube){
         cubeMaterial = new THREE.MeshLambertMaterial( {  map: new THREE.TextureLoader().load( "textures/blocks/cobblestone_mossy.png" ) } );
 }
 function planeBuild(plane){
+    changeDirection = false;
+    rotcontrols.detach(selected);
     planeFollow();
     // 实体对象，就是鼠标点击确定之后的实体对象，并且实体对象的图片引入
     cubeGeo = new THREE.BoxGeometry( 50, 10, 50 );
@@ -35,6 +39,8 @@ function planeBuild(plane){
 
 }
 function upplaneBuild(upplane){
+    changeDirection = false;
+    rotcontrols.detach(selected);
     upplaneFollow();
     // 实体对象，就是鼠标点击确定之后的实体对象，并且实体对象的图片引入
     cubeGeo = new THREE.BoxGeometry( 1, 50, 50 );
@@ -45,6 +51,7 @@ function upplaneBuild(upplane){
 
 }
 function cylinderBuild(scylinder){
+    changeDirection = false;
     cylinderFollow();
     // 实体对象，就是鼠标点击确定之后的实体对象，并且实体对象的图片引入
     cubeGeo = new THREE.CylinderBufferGeometry( 10,10, 10, 18 ,3);

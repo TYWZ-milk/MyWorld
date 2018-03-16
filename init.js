@@ -8,7 +8,7 @@ var mouse, raycaster, isShiftDown = false;
 
 var rollOverMesh, rollOverMaterial,rollOverGeo;
 var cubeGeo, cubeMaterial;
-var orbitControl;
+var orbitControl,rotcontrols;
 var objects = [];
 
 init();
@@ -42,11 +42,18 @@ function init(){
     scene.add(loadGround());
     loadSky();
 
-    renderer = new THREE.WebGLRenderer( { antialias: true } );//生成渲染器对象，锯齿效果为true
+    renderer = new THREE.WebGLRenderer( { antialias: true} );//生成渲染器对象，锯齿效果为true
     renderer.setClearColor( 0xf0f0f0 );
     renderer.setPixelRatio( window.devicePixelRatio );
     renderer.setSize( window.innerWidth, window.innerHeight );
+
     orbitControl = new THREE.OrbitControls( camera, renderer.domElement );
+
+    rotcontrols = new THREE.TransformControls(camera,renderer.domElement);
+    rotcontrols.addEventListener( 'change', render );
+    rotcontrols.setMode("rotate");
+    scene.add(rotcontrols);
+
     container.appendChild( renderer.domElement );
     document.addEventListener( 'mousemove', onDocumentMouseMove, false );//鼠标移动事件
     document.addEventListener( 'mousedown', onDocumentMouseDown, false );//鼠标点击事件
@@ -146,6 +153,11 @@ function onDocumentMouseMove( event ) {
     }
     render();
 }
+var changeDirection = false;
+function direction(){
+    changeDirection = true;
+}
+var selected;
 function onDocumentMouseDown( event ) {
     event.preventDefault();
     mouse.set( ( event.clientX / window.innerWidth ) * 2 - 1, - ( event.clientY / window.innerHeight ) * 2 + 1 );
@@ -160,7 +172,20 @@ function onDocumentMouseDown( event ) {
                 objects.splice( objects.indexOf( intersect.object ), 1 );
             }
             // create cube
-        } else {
+        }
+        else if(changeDirection) {
+            if ( intersect.object != plane ) {
+                for (var i = objects.length - 1; i >= 0; i--)
+                    if (intersects[0].object == objects[i]) {
+                        selected = objects[i];
+                        rotcontrols.attach(selected);
+                    }
+            }
+            else{
+                rotcontrols.detach(selected);
+            }
+        }
+        else {
             var voxel = new THREE.Mesh( cubeGeo, cubeMaterial );
             voxel.position.copy( intersect.point ).add( intersect.face.normal );
             voxel.position.divideScalar( 50 ).floor().multiplyScalar( 50 ).addScalar( 25 );
