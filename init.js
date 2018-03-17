@@ -1,7 +1,7 @@
 if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 //detector是一个探测器，引用了detector.js，用来探测webgl的支持情况
 
-var container;
+var container,voxel;
 var camera, scene, renderer;
 var plane, cube;
 var mouse, raycaster, isShiftDown = false;
@@ -186,7 +186,7 @@ function onDocumentMouseDown( event ) {
             }
         }
         else {
-            var voxel = new THREE.Mesh( cubeGeo, cubeMaterial );
+            voxel = new THREE.Mesh( cubeGeo, cubeMaterial );
             voxel.position.copy( intersect.point ).add( intersect.face.normal );
             voxel.position.divideScalar( 50 ).floor().multiplyScalar( 50 ).addScalar( 25 );
             scene.add( voxel );

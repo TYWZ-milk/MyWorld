@@ -1,6 +1,77 @@
 /**
  * Created by deii66 on 2018/3/15.
  */
+function loadModel(model){
+    changeDirection = false;
+    rotcontrols.detach(selected);
+    modelFollow();
+    var loader = new THREE.OBJLoader();
+    if(model == "tree1") {
+        loader.load('model/AL06a.obj', function (geometry) {
+            geometry.traverse(function (child) {
+                if (child instanceof THREE.Mesh) {
+                    child.material.depthTest = true;
+                    child.material.map = THREE.ImageUtils.loadTexture('textures/models/timg.jpg');
+                    child.geometry.computeBoundingSphere();
+                }
+            });
+            geometry.scale.set(50, 50, 50);
+
+        });
+    }
+    else if(model == "tree2") {
+        loader.load('model/Blue Spruce.obj', function (geometry) {
+            geometry.traverse(function (child) {
+                if (child instanceof THREE.Mesh) {
+                    child.material.depthTest = true;
+                    child.material.map = THREE.ImageUtils.loadTexture('textures/models/timg.jpg');
+                    child.geometry.computeBoundingSphere();
+                }
+            });
+            geometry.scale.set(50, 50, 50);
+        });
+    }
+    else if(model == "tree3") {
+        loader.load('model/BS07a.obj', function (geometry) {
+            geometry.traverse(function (child) {
+                if (child instanceof THREE.Mesh) {
+                    child.material.depthTest =true;
+                    child.material.map = THREE.ImageUtils.loadTexture('textures/models/timg.jpg');
+                    child.geometry.computeBoundingSphere();
+                }
+            });
+            geometry.scale.set(50, 50, 50);
+        });
+    }
+    else if(model == "tree4") {
+        loader.load('model/Scotch Pine.obj', function (geometry) {
+            geometry.traverse(function (child) {
+                if (child instanceof THREE.Mesh) {
+                    child.material.depthTest = true;
+                    child.material.map = THREE.ImageUtils.loadTexture('textures/models/timg.jpg');
+                    child.geometry.computeBoundingSphere();
+                }
+            });
+            geometry.scale.set(50, 50, 50);
+        });
+    }
+}
+function modelFollow(){
+    scene.remove(rollOverMesh);
+    var loader = new THREE.OBJLoader();
+    loader.load('model/Scotch Pine.obj', function (geometry) {
+        geometry.traverse(function (child) {
+            if (child instanceof THREE.Mesh) {
+                child.material.depthTest = true;
+                child.material =new THREE.MeshBasicMaterial( { color: 0xff0000, opacity: 0.5, transparent: true } );
+                child.geometry.computeBoundingSphere();
+            }
+        });
+        geometry.scale.set(50, 50, 50);
+        rollOverMesh = geometry;
+        scene.add(rollOverMesh);
+    });
+}
 //把创建鼠标跟随几何图形和实体图形都抽象成函数，通过点击事件进行调用
 function cubeBuild(cube){
     changeDirection = false;
