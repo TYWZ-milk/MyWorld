@@ -1,76 +1,135 @@
 /**
  * Created by deii66 on 2018/3/15.
  */
+var tree1,tree2,tree3,tree4;
+function preModel(){
+    var loader = new THREE.OBJLoader();
+    loader.load('model/AL06a.obj', function (geometry) {
+        geometry.traverse(function (child) {
+            if (child instanceof THREE.Mesh) {
+                child.material.depthTest = true;
+                child.material.map = THREE.ImageUtils.loadTexture('textures/models/timg.jpg');
+                child.geometry.computeBoundingSphere();
+            }
+        });
+        geometry.scale.set(50, 50, 50);
+
+        tree1 = geometry;
+    });
+    loader.load('model/Blue Spruce.obj', function (geometry) {
+        geometry.traverse(function (child) {
+            if (child instanceof THREE.Mesh) {
+                child.material.depthTest = true;
+                child.material.map = THREE.ImageUtils.loadTexture('textures/models/timg.jpg');
+                child.geometry.computeBoundingSphere();
+            }
+        });
+        geometry.scale.set(50, 50, 50);
+        tree2 = geometry;
+    });
+    loader.load('model/BS07a.obj', function (geometry) {
+        geometry.traverse(function (child) {
+            if (child instanceof THREE.Mesh) {
+                child.material.depthTest = true;
+                child.material.map = THREE.ImageUtils.loadTexture('textures/models/timg.jpg');
+                child.geometry.computeBoundingSphere();
+            }
+        });
+        geometry.scale.set(50, 50, 50);
+        tree3 = geometry;
+    });
+    loader.load('model/Scotch Pine.obj', function (geometry) {
+        geometry.traverse(function (child) {
+            if (child instanceof THREE.Mesh) {
+                child.material.depthTest = true;
+                child.material.map = THREE.ImageUtils.loadTexture('textures/models/timg.jpg');
+                child.geometry.computeBoundingSphere();
+            }
+        });
+        geometry.scale.set(50, 50, 50);
+        tree4 = geometry;
+    });
+}
 function loadModel(model){
     changeDirection = false;
     rotcontrols.detach(selected);
-    modelFollow();
+
+    if(model == "tree1") {
+        modelFollow("tree1");
+        voxel = tree1;
+    }
+    else if(model == "tree2") {
+        modelFollow("tree2");
+        voxel = tree2;
+    }
+    else if(model == "tree3") {
+        modelFollow("tree3");
+        voxel = tree3;
+    }
+    else if(model == "tree4") {
+        modelFollow("tree4");
+        voxel = tree4;
+    }
+}
+function modelFollow(model){
+    scene.remove(rollOverMesh);
     var loader = new THREE.OBJLoader();
     if(model == "tree1") {
         loader.load('model/AL06a.obj', function (geometry) {
             geometry.traverse(function (child) {
                 if (child instanceof THREE.Mesh) {
                     child.material.depthTest = true;
-                    child.material.map = THREE.ImageUtils.loadTexture('textures/models/timg.jpg');
+                    child.material = new THREE.MeshBasicMaterial({color: 0xff0000, opacity: 0.5, transparent: true});
                     child.geometry.computeBoundingSphere();
                 }
             });
             geometry.scale.set(50, 50, 50);
-
+            rollOverMesh = geometry;
+            scene.add(rollOverMesh);
         });
     }
-    else if(model == "tree2") {
+    else if(model == "tree2"){
         loader.load('model/Blue Spruce.obj', function (geometry) {
             geometry.traverse(function (child) {
                 if (child instanceof THREE.Mesh) {
                     child.material.depthTest = true;
-                    child.material.map = THREE.ImageUtils.loadTexture('textures/models/timg.jpg');
+                    child.material = new THREE.MeshBasicMaterial({color: 0xff0000, opacity: 0.5, transparent: true});
                     child.geometry.computeBoundingSphere();
                 }
             });
             geometry.scale.set(50, 50, 50);
+            rollOverMesh = geometry;
+            scene.add(rollOverMesh);
         });
     }
-    else if(model == "tree3") {
+    else if(model == "tree3"){
         loader.load('model/BS07a.obj', function (geometry) {
             geometry.traverse(function (child) {
                 if (child instanceof THREE.Mesh) {
-                    child.material.depthTest =true;
-                    child.material.map = THREE.ImageUtils.loadTexture('textures/models/timg.jpg');
+                    child.material.depthTest = true;
+                    child.material = new THREE.MeshBasicMaterial({color: 0xff0000, opacity: 0.5, transparent: true});
                     child.geometry.computeBoundingSphere();
                 }
             });
             geometry.scale.set(50, 50, 50);
+            rollOverMesh = geometry;
+            scene.add(rollOverMesh);
         });
     }
-    else if(model == "tree4") {
+    else if(model == "tree4"){
         loader.load('model/Scotch Pine.obj', function (geometry) {
             geometry.traverse(function (child) {
                 if (child instanceof THREE.Mesh) {
                     child.material.depthTest = true;
-                    child.material.map = THREE.ImageUtils.loadTexture('textures/models/timg.jpg');
+                    child.material = new THREE.MeshBasicMaterial({color: 0xff0000, opacity: 0.5, transparent: true});
                     child.geometry.computeBoundingSphere();
                 }
             });
             geometry.scale.set(50, 50, 50);
+            rollOverMesh = geometry;
+            scene.add(rollOverMesh);
         });
     }
-}
-function modelFollow(){
-    scene.remove(rollOverMesh);
-    var loader = new THREE.OBJLoader();
-    loader.load('model/Scotch Pine.obj', function (geometry) {
-        geometry.traverse(function (child) {
-            if (child instanceof THREE.Mesh) {
-                child.material.depthTest = true;
-                child.material =new THREE.MeshBasicMaterial( { color: 0xff0000, opacity: 0.5, transparent: true } );
-                child.geometry.computeBoundingSphere();
-            }
-        });
-        geometry.scale.set(50, 50, 50);
-        rollOverMesh = geometry;
-        scene.add(rollOverMesh);
-    });
 }
 //把创建鼠标跟随几何图形和实体图形都抽象成函数，通过点击事件进行调用
 function cubeBuild(cube){
@@ -87,6 +146,16 @@ function cubeBuild(cube){
         cubeMaterial = new THREE.MeshLambertMaterial( {  map: new THREE.TextureLoader().load( "textures/blocks/stone-wall.jpg" ) } );
     else if(cube=="mossywall")
         cubeMaterial = new THREE.MeshLambertMaterial( {  map: new THREE.TextureLoader().load( "textures/blocks/cobblestone_mossy.png" ) } );
+    else if(cube=="normal") {
+        var material1 = new THREE.MeshPhongMaterial( {
+            map: THREE.ImageUtils.loadTexture('textures/blocks/atlas.png') } );
+        var material2 = new THREE.MeshPhongMaterial( {
+            map: THREE.ImageUtils.loadTexture('textures/blocks/dirt.png') } );
+        var material3 = new THREE.MeshPhongMaterial( {
+            map: THREE.ImageUtils.loadTexture('textures/blocks/grass.png') } );
+        var materials = [material1, material1, material3, material2,material1,material1];
+        cubeMaterial = new THREE.MeshFaceMaterial(materials);
+    }
 }
 function planeBuild(plane){
     changeDirection = false;
@@ -104,6 +173,8 @@ function planeBuild(plane){
         cubeMaterial = new THREE.MeshLambertMaterial( {  map: new THREE.TextureLoader().load( "textures/blocks/cobblestone.png" ) } );
     else if(plane=="dirt")
         cubeMaterial = new THREE.MeshLambertMaterial( {  map: new THREE.TextureLoader().load( "textures/blocks/dirt.png" ) } );
+    else if(plane=="grass")
+        cubeMaterial = new THREE.MeshLambertMaterial( {  map: new THREE.TextureLoader().load( "textures/blocks/grass.png" ) } );
     for(var i=0; i <cubeGeo.vertices.length;i++){
         cubeGeo.vertices[i].y = -23;
     }

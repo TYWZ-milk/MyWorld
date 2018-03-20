@@ -41,6 +41,7 @@ function init(){
 
     scene.add(loadGround());
     loadSky();
+    preModel();
 
     renderer = new THREE.WebGLRenderer( { antialias: true} );//生成渲染器对象，锯齿效果为true
     renderer.setClearColor( 0xf0f0f0 );
@@ -64,7 +65,7 @@ function init(){
 }
 function loadGround() {
     //add ground
-    var texture2 = THREE.ImageUtils.loadTexture("textures/terrain/grasslight-big.jpg");
+    var texture2 = THREE.ImageUtils.loadTexture("textures/blocks/grass.png");
     texture2.wrapS = THREE.RepeatWrapping;
     texture2.wrapT = THREE.RepeatWrapping;
     texture2.repeat.set(100,100);
@@ -186,11 +187,13 @@ function onDocumentMouseDown( event ) {
             }
         }
         else {
-            voxel = new THREE.Mesh( cubeGeo, cubeMaterial );
-            voxel.position.copy( intersect.point ).add( intersect.face.normal );
-            voxel.position.divideScalar( 50 ).floor().multiplyScalar( 50 ).addScalar( 25 );
-            scene.add( voxel );
-            objects.push( voxel );
+            //if(voxel.type != "Group") {
+                voxel = new THREE.Mesh(cubeGeo, cubeMaterial);
+           // }
+            voxel.position.copy(intersect.point).add(intersect.face.normal);
+            voxel.position.divideScalar(50).floor().multiplyScalar(50).addScalar(25);
+            scene.add(voxel);
+            objects.push(voxel);
         }
         render();
     }
