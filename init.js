@@ -187,9 +187,9 @@ function onDocumentMouseDown( event ) {
             }
         }
         else {
-            //if(voxel.type != "Group") {
+            if(cubeGeo != null ) {
                 voxel = new THREE.Mesh(cubeGeo, cubeMaterial);
-           // }
+            }
             voxel.position.copy(intersect.point).add(intersect.face.normal);
             voxel.position.divideScalar(50).floor().multiplyScalar(50).addScalar(25);
             scene.add(voxel);

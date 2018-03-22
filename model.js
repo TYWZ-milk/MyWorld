@@ -54,6 +54,8 @@ function loadModel(model){
     changeDirection = false;
     rotcontrols.detach(selected);
 
+    cubeGeo = null;
+    cubeMaterial = null;
     if(model == "tree1") {
         modelFollow("tree1");
         voxel = tree1;
@@ -146,6 +148,8 @@ function cubeBuild(cube){
         cubeMaterial = new THREE.MeshLambertMaterial( {  map: new THREE.TextureLoader().load( "textures/blocks/stone-wall.jpg" ) } );
     else if(cube=="mossywall")
         cubeMaterial = new THREE.MeshLambertMaterial( {  map: new THREE.TextureLoader().load( "textures/blocks/cobblestone_mossy.png" ) } );
+    else if(cube=="endstone")
+        cubeMaterial = new THREE.MeshLambertMaterial( {  map: new THREE.TextureLoader().load( "textures/blocks/end_stone.png" ) } );
     else if(cube=="normal") {
         var material1 = new THREE.MeshPhongMaterial( {
             map: THREE.ImageUtils.loadTexture('textures/blocks/atlas.png') } );
@@ -188,8 +192,14 @@ function upplaneBuild(upplane){
     cubeGeo = new THREE.BoxGeometry( 1, 50, 50 );
     if(upplane=="daywindow")
         cubeMaterial = new THREE.MeshLambertMaterial( {  map: new THREE.TextureLoader().load( "textures/blocks/daylight_detector_top.png" ) } );
-    else if(upplane=="irondoor")
-        cubeMaterial = new THREE.MeshLambertMaterial( {  map: new THREE.TextureLoader().load( "textures/blocks/door_iron_upper.png" ) } );
+    else if(upplane=="irondoor") {
+        var material1 = new THREE.MeshPhongMaterial( {
+            map: THREE.ImageUtils.loadTexture('textures/blocks/door_iron_lower.png') } );
+        var material2 = new THREE.MeshPhongMaterial( {
+            map: THREE.ImageUtils.loadTexture('textures/blocks/door_iron_upper.png') } );
+        var materials = [material2, material1];
+        cubeMaterial = new THREE.MeshFaceMaterial(materials);
+    }
 
 }
 function cylinderBuild(scylinder){
@@ -197,9 +207,16 @@ function cylinderBuild(scylinder){
     cylinderFollow();
     // 实体对象，就是鼠标点击确定之后的实体对象，并且实体对象的图片引入
     cubeGeo = new THREE.CylinderBufferGeometry( 10,10, 10, 18 ,3);
-    if(scylinder=="cake")
-        cubeMaterial = new THREE.MeshLambertMaterial( { map: new THREE.TextureLoader().load( "textures/square-outline-textured.png" ) } );
-    cubeGeo.position.y=-30;
+    if(scylinder=="cake") {
+        var material1 = new THREE.MeshPhongMaterial( {
+            map: THREE.ImageUtils.loadTexture('textures/blocks/cake_inner.png') } );
+        var material2 = new THREE.MeshPhongMaterial( {
+            map: THREE.ImageUtils.loadTexture('textures/blocks/cake_bottom.png') } );
+        var material3 = new THREE.MeshPhongMaterial( {
+            map: THREE.ImageUtils.loadTexture('textures/blocks/cake_top.png') } );
+        var materials = [material1, material3, material2];
+        cubeMaterial = new THREE.MeshFaceMaterial(materials);
+    }
 }
 function cubeFollow(){
     scene.remove(rollOverMesh);
@@ -229,9 +246,8 @@ function planeFollow(){
 function cylinderFollow(){
     scene.remove(rollOverMesh);
     // 这个几何对象是鼠标在移动时候，跟随鼠标显示的几何对象
-    rollOverGeo = new THREE.CylinderGeometry( 10,10, 10, 18 ,3 );//创建一个盒状几何对象
+    rollOverGeo = new THREE.CylinderBufferGeometry( 10,10, 10, 18 ,3);//创建一个盒状几何对象
     rollOverMaterial = new THREE.MeshBasicMaterial( { color: 0xff0000, opacity: 0.5, transparent: true } );
-
     //创建一个色彩为红色的材料，透明度为半透明
     rollOverMesh = new THREE.Mesh( rollOverGeo, rollOverMaterial );
     //通过mesh方法把颜色应用到几何对象上
