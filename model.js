@@ -142,6 +142,12 @@ function cubeBuild(cube){
     cubeGeo = new THREE.BoxGeometry( 50, 50, 50 );
     if(cube=="brick")
         cubeMaterial = new THREE.MeshLambertMaterial( {  map: new THREE.TextureLoader().load( "textures/blocks/brick.png" ) } );
+    if(cube=="nether_brick")
+        cubeMaterial = new THREE.MeshLambertMaterial( {  map: new THREE.TextureLoader().load( "textures/blocks/nether_brick.png" ) } );
+    if(cube=="obsidian")
+        cubeMaterial = new THREE.MeshLambertMaterial( {  map: new THREE.TextureLoader().load( "textures/blocks/obsidian.png" ) } );
+    if(cube=="netherrack")
+        cubeMaterial = new THREE.MeshLambertMaterial( {  map: new THREE.TextureLoader().load( "textures/blocks/netherrack.png" ) } );
     else if(cube=="bookshelf")
         cubeMaterial = new THREE.MeshLambertMaterial( { map: new THREE.TextureLoader().load( "textures/blocks/bookshelf.png" ) } );
     else if(cube=="stonewall")
@@ -150,6 +156,62 @@ function cubeBuild(cube){
         cubeMaterial = new THREE.MeshLambertMaterial( {  map: new THREE.TextureLoader().load( "textures/blocks/cobblestone_mossy.png" ) } );
     else if(cube=="endstone")
         cubeMaterial = new THREE.MeshLambertMaterial( {  map: new THREE.TextureLoader().load( "textures/blocks/end_stone.png" ) } );
+    else if(cube=="dirt")
+        cubeMaterial = new THREE.MeshLambertMaterial( {  map: new THREE.TextureLoader().load( "textures/blocks/dirt.png" ) } );
+    else if(cube=="dessert")
+        cubeMaterial = new THREE.MeshLambertMaterial( {  map: new THREE.TextureLoader().load( "textures/blocks/glowstone.png" ) } );
+    else if(cube=="gravel")
+        cubeMaterial = new THREE.MeshLambertMaterial( {  map: new THREE.TextureLoader().load( "textures/blocks/gravel.png" ) } );
+    else if(cube=="hardened_clay")
+        cubeMaterial = new THREE.MeshLambertMaterial( {  map: new THREE.TextureLoader().load( "textures/blocks/hardened_clay.png" ) } );
+    else if(cube=="ice")
+        cubeMaterial = new THREE.MeshLambertMaterial( {  map: new THREE.TextureLoader().load( "textures/blocks/ice.png" ) } );
+    else if(cube=="hay"){
+        var material1 = new THREE.MeshPhongMaterial( {
+            map: THREE.ImageUtils.loadTexture('textures/blocks/hay_block_side.png') } );
+        var material2 = new THREE.MeshPhongMaterial( {
+            map: THREE.ImageUtils.loadTexture('textures/blocks/hay_block_top.png') } );
+        var materials = [material1, material1, material2, material2,material1,material1];
+        cubeMaterial = new THREE.MeshFaceMaterial(materials);
+    }
+    else if(cube=="mycelium"){
+        var material1 = new THREE.MeshPhongMaterial( {
+            map: THREE.ImageUtils.loadTexture('textures/blocks/mycelium_side.png') } );
+        var material2 = new THREE.MeshPhongMaterial( {
+            map: THREE.ImageUtils.loadTexture('textures/blocks/mycelium_top.png') } );
+        var materials = [material1, material1, material2, material2,material1,material1];
+        cubeMaterial = new THREE.MeshFaceMaterial(materials);
+    }
+    else if(cube=="hardened_clay_stained_black")
+        cubeMaterial = new THREE.MeshLambertMaterial( {  map: new THREE.TextureLoader().load( "textures/blocks/hardened_clay_stained_black.png" ) } );
+    else if(cube=="hardened_clay_stained_blue")
+        cubeMaterial = new THREE.MeshLambertMaterial( {  map: new THREE.TextureLoader().load( "textures/blocks/hardened_clay_stained_blue.png" ) } );
+    else if(cube=="hardened_clay_stained_brown")
+        cubeMaterial = new THREE.MeshLambertMaterial( {  map: new THREE.TextureLoader().load( "textures/blocks/hardened_clay_stained_brown.png" ) } );
+    else if(cube=="hardened_clay_stained_cyan")
+        cubeMaterial = new THREE.MeshLambertMaterial( {  map: new THREE.TextureLoader().load( "textures/blocks/hardened_clay_stained_cyan.png" ) } );
+    else if(cube=="hardened_clay_stained_gray")
+        cubeMaterial = new THREE.MeshLambertMaterial( {  map: new THREE.TextureLoader().load( "textures/blocks/hardened_clay_stained_gray.png" ) } );
+    else if(cube=="hardened_clay_stained_green")
+        cubeMaterial = new THREE.MeshLambertMaterial( {  map: new THREE.TextureLoader().load( "textures/blocks/hardened_clay_stained_green.png" ) } );
+    else if(cube=="hardened_clay_stained_light_blue")
+        cubeMaterial = new THREE.MeshLambertMaterial( {  map: new THREE.TextureLoader().load( "textures/blocks/hardened_clay_stained_light_blue.png" ) } );
+    else if(cube=="hardened_clay_stained_lime")
+        cubeMaterial = new THREE.MeshLambertMaterial( {  map: new THREE.TextureLoader().load( "textures/blocks/hardened_clay_stained_lime.png" ) } );
+    else if(cube=="hardened_clay_stained_orange")
+        cubeMaterial = new THREE.MeshLambertMaterial( {  map: new THREE.TextureLoader().load( "textures/blocks/hardened_clay_stained_orange.png" ) } );
+    else if(cube=="hardened_clay_stained_pink")
+        cubeMaterial = new THREE.MeshLambertMaterial( {  map: new THREE.TextureLoader().load( "textures/blocks/hardened_clay_stained_pink.png" ) } );
+    else if(cube=="hardened_clay_stained_purple")
+        cubeMaterial = new THREE.MeshLambertMaterial( {  map: new THREE.TextureLoader().load( "textures/blocks/hardened_clay_stained_purple.png" ) } );
+    else if(cube=="hardened_clay_stained_red")
+        cubeMaterial = new THREE.MeshLambertMaterial( {  map: new THREE.TextureLoader().load( "textures/blocks/hardened_clay_stained_red.png" ) } );
+    else if(cube=="hardened_clay_stained_white")
+        cubeMaterial = new THREE.MeshLambertMaterial( {  map: new THREE.TextureLoader().load( "textures/blocks/hardened_clay_stained_white.png" ) } );
+    else if(cube=="hardened_clay_stained_yellow")
+        cubeMaterial = new THREE.MeshLambertMaterial( {  map: new THREE.TextureLoader().load( "textures/blocks/hardened_clay_stained_yellow.png" ) } );
+    else if(cube=="hardened_clay_stained_silver")
+        cubeMaterial = new THREE.MeshLambertMaterial( {  map: new THREE.TextureLoader().load( "textures/blocks/hardened_clay_stained_silver.png" ) } );
     else if(cube=="normal") {
         var material1 = new THREE.MeshPhongMaterial( {
             map: THREE.ImageUtils.loadTexture('textures/blocks/atlas.png') } );
@@ -158,6 +220,18 @@ function cubeBuild(cube){
         var material3 = new THREE.MeshPhongMaterial( {
             map: THREE.ImageUtils.loadTexture('textures/blocks/grass.png') } );
         var materials = [material1, material1, material3, material2,material1,material1];
+        cubeMaterial = new THREE.MeshFaceMaterial(materials);
+    }
+    else if(cube=="sand_stone") {
+        var material1 = new THREE.MeshPhongMaterial( {
+            map: THREE.ImageUtils.loadTexture('textures/blocks/sandstone_carved.png') } );
+        var material2 = new THREE.MeshPhongMaterial( {
+            map: THREE.ImageUtils.loadTexture('textures/blocks/sandstone_bottom.png') } );
+        var material3 = new THREE.MeshPhongMaterial( {
+            map: THREE.ImageUtils.loadTexture('textures/blocks/sandstone_top.png') } );
+        var material4 = new THREE.MeshPhongMaterial( {
+            map: THREE.ImageUtils.loadTexture('textures/blocks/sandstone_normal.png') } );
+        var materials = [material1, material4, material3, material2,material4,material4];
         cubeMaterial = new THREE.MeshFaceMaterial(materials);
     }
 }
@@ -169,16 +243,24 @@ function planeBuild(plane){
     cubeGeo = new THREE.BoxGeometry( 50, 10, 50 );
     if(plane=="water")
         cubeMaterial = new THREE.MeshLambertMaterial( {  map: new THREE.TextureLoader().load( "textures/blocks/water_flow.png" ) } );
+    else if(plane=="red_sand")
+        cubeMaterial = new THREE.MeshLambertMaterial( {  map: new THREE.TextureLoader().load( "textures/blocks/red_sand.png" ) } );
+    else if(plane=="sand")
+        cubeMaterial = new THREE.MeshLambertMaterial( {  map: new THREE.TextureLoader().load( "textures/blocks/sand.png" ) } );
+    else if(plane=="snow")
+        cubeMaterial = new THREE.MeshLambertMaterial( {  map: new THREE.TextureLoader().load( "textures/blocks/snow.png" ) } );
     else if(plane=="woodfloor")
         cubeMaterial = new THREE.MeshLambertMaterial( {  map: new THREE.TextureLoader().load( "textures/blocks/wood-floor.jpg" ) } );
     else if(plane=="clay")
         cubeMaterial = new THREE.MeshLambertMaterial( {  map: new THREE.TextureLoader().load( "textures/blocks/clay.png" ) } );
     else if(plane=="cobblestone")
         cubeMaterial = new THREE.MeshLambertMaterial( {  map: new THREE.TextureLoader().load( "textures/blocks/cobblestone.png" ) } );
-    else if(plane=="dirt")
-        cubeMaterial = new THREE.MeshLambertMaterial( {  map: new THREE.TextureLoader().load( "textures/blocks/dirt.png" ) } );
     else if(plane=="grass")
         cubeMaterial = new THREE.MeshLambertMaterial( {  map: new THREE.TextureLoader().load( "textures/blocks/grass.png" ) } );
+    else if(plane=="farmland_dry")
+        cubeMaterial = new THREE.MeshLambertMaterial( {  map: new THREE.TextureLoader().load( "textures/blocks/farmland_dry.png" ) } );
+    else if(plane=="farmland_wet")
+        cubeMaterial = new THREE.MeshLambertMaterial( {  map: new THREE.TextureLoader().load( "textures/blocks/farmland_wet.png" ) } );
     for(var i=0; i <cubeGeo.vertices.length;i++){
         cubeGeo.vertices[i].y = -23;
     }
