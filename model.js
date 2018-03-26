@@ -1,7 +1,7 @@
 /**
  * Created by deii66 on 2018/3/15.
  */
-var tree1,tree2,tree3,tree4;
+var tree1,tree2,tree3,tree4,chess;
 function preModel(){
     var loader = new THREE.OBJLoader();
     loader.load('model/AL06a.obj', function (geometry) {
@@ -49,6 +49,12 @@ function preModel(){
         geometry.scale.set(50, 50, 50);
         tree4 = geometry;
     });
+    loader = new THREE.AMFLoader();
+    loader.load( 'model/rook.amf', function ( amfobject ) {
+        amfobject.scale.set(20,20,20);
+        amfobject.rotation.x=-Math.PI/2;
+        chess = amfobject;
+    } );
 }
 function loadModel(model){
     changeDirection = false;
@@ -71,6 +77,10 @@ function loadModel(model){
     else if(model == "tree4") {
         modelFollow("tree4");
         voxel = tree4;
+    }
+    else if(model == "chess"){
+        modelFollow("chess");
+        voxel = chess;
     }
 }
 function modelFollow(model){
@@ -131,6 +141,22 @@ function modelFollow(model){
             rollOverMesh = geometry;
             scene.add(rollOverMesh);
         });
+    }
+    else if(model == "chess"){
+        loader = new THREE.AMFLoader();
+        loader.load( 'model/rook.amf', function ( amfobject ) {
+            amfobject.traverse(function (child) {
+                if (child instanceof THREE.Mesh) {
+                    child.material.depthTest = true;
+                    child.material = new THREE.MeshBasicMaterial({color: 0xff0000, opacity: 0.5, transparent: true});
+                    child.geometry.computeBoundingSphere();
+                }
+            });
+            amfobject.scale.set(20,20,20);
+            amfobject.rotation.x=-Math.PI/2;
+            rollOverMesh = amfobject;
+            scene.add(rollOverMesh);
+        } );
     }
 }
 //把创建鼠标跟随几何图形和实体图形都抽象成函数，通过点击事件进行调用
@@ -212,6 +238,8 @@ function cubeBuild(cube){
         cubeMaterial = new THREE.MeshLambertMaterial( {  map: new THREE.TextureLoader().load( "textures/blocks/hardened_clay_stained_yellow.png" ) } );
     else if(cube=="hardened_clay_stained_silver")
         cubeMaterial = new THREE.MeshLambertMaterial( {  map: new THREE.TextureLoader().load( "textures/blocks/hardened_clay_stained_silver.png" ) } );
+    else if(cube=="granite")
+        cubeMaterial = new THREE.MeshLambertMaterial( {  map: new THREE.TextureLoader().load( "textures/blocks/stone_granite.png" ) } );
     else if(cube=="normal") {
         var material1 = new THREE.MeshPhongMaterial( {
             map: THREE.ImageUtils.loadTexture('textures/blocks/atlas.png') } );
