@@ -187,11 +187,17 @@ function onDocumentMouseDown( event ) {
             }
         }
         else {
-            if(cubeGeo != null ) {
+            if(cubeGeo.type != "BufferGeometry" ) {
                 voxel = new THREE.Mesh(cubeGeo, cubeMaterial);
+                voxel.position.copy(intersect.point).add(intersect.face.normal);
+                voxel.position.divideScalar(50).floor().multiplyScalar(50).addScalar(25);
             }
-            voxel.position.copy(intersect.point).add(intersect.face.normal);
-            voxel.position.divideScalar(50).floor().multiplyScalar(50).addScalar(25);
+            else{
+                voxel = new THREE.Mesh(cubeGeo, cubeMaterial);
+                voxel.position.copy(intersect.point).add(intersect.face.normal);
+                voxel.position.divideScalar(50).floor().multiplyScalar(50);
+                voxel.scale.set(50,50,50);
+            }
             scene.add(voxel);
             objects.push(voxel);
         }
