@@ -39,9 +39,10 @@ function init(){
     directionalLight.position.set( 1, 0.75, 0.5 ).normalize();
     scene.add( directionalLight );
 
+    preModel();
     scene.add(loadGround());
     loadSky();
-    preModel();
+    loadScene();
 
     renderer = new THREE.WebGLRenderer( { antialias: true} );//生成渲染器对象，锯齿效果为true
     renderer.setClearColor( 0xf0f0f0 );
@@ -92,7 +93,9 @@ function loadSky() {
     var skyBox = new THREE.Mesh( skyGeometry, skyMaterial );//创建一个完整的天空盒，填入几何模型和材质的参数
     scene.add( skyBox );
 }
-
+function loadScene(){
+    mountain();
+}
 
 function method2(){
     methodfollow2();

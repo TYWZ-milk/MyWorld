@@ -8,6 +8,7 @@ var hardened_clay_stained_light_blueImg,hardened_clay_stained_limeImg,hardened_c
 var hardened_clay_stained_redImg,hardened_clay_stained_whiteImg,hardened_clay_stained_yellowImg,hardened_clay_stained_silverImg,graniteImg;
 var atlasImg,grassImg,sand_stoneImg,sandstone_bottomImg,sandstone_topImg,sand_stonenormalImg,waterImg,red_sandImg,sandImg,snowImg,woodfloorImg;
 var clayImg,cobblestoneImg,farmland_dryImg,farmland_wetImg,daywindowImg,door_iron_lowerImg,door_iron_upperImg;
+var initRock;
 function preModel(){
     brickImg = new THREE.TextureLoader().load( "textures/blocks/brick.png" );
     branchImg = new THREE.TextureLoader().load( "textures/models/timg.jpg" );
@@ -61,6 +62,19 @@ function preModel(){
     daywindowImg = new THREE.TextureLoader().load( "textures/blocks/daylight_detector_top.png" );
     door_iron_lowerImg = THREE.ImageUtils.loadTexture('textures/blocks/door_iron_lower.png');
     door_iron_upperImg = THREE.ImageUtils.loadTexture('textures/blocks/door_iron_upper.png');
+
+    var material1 = new THREE.MeshPhongMaterial( {
+        map: atlasImg } );
+    var material2 = new THREE.MeshPhongMaterial( {
+        map: dirtImg } );
+    var material3 = new THREE.MeshPhongMaterial( {
+        map: grassImg } );
+    var materials = [material1, material1, material3, material2,material1,material1];
+    cubeMaterial = new THREE.MeshFaceMaterial(materials);
+    cubeGeo = new THREE.BoxGeometry( 50, 50, 50 );
+    initRock = new THREE.Mesh(cubeGeo,cubeMaterial);
+
+
     var loader = new THREE.OBJLoader();
     loader.load('model/AL06a.obj', function (geometry) {
         geometry.traverse(function (child) {
