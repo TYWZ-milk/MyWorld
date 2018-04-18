@@ -9,6 +9,56 @@ var hardened_clay_stained_redImg,hardened_clay_stained_whiteImg,hardened_clay_st
 var atlasImg,grassImg,sand_stoneImg,sandstone_bottomImg,sandstone_topImg,sand_stonenormalImg,waterImg,red_sandImg,sandImg,snowImg,woodfloorImg;
 var clayImg,cobblestoneImg,farmland_dryImg,farmland_wetImg,daywindowImg,door_iron_lowerImg,door_iron_upperImg;
 var initRock;
+var vertices = new Float32Array( [
+    -25.0, -25.0,  25.0,
+    25.0, -25.0,  25.0,
+    25.0,  25.0,  25.0,
+
+    25.0,  25.0,  25.0,
+    -25.0,  25.0,  25.0,
+    -25.0, -25.0,  25.0,
+
+    25.0, 25.0, 25.0,
+    25.0 , -25.0, 25.0,
+    25.0, -25.0, -25.0,
+
+    25.0, -25.0, -25.0,
+    25.0 , 25.0, -25.0,
+    25.0, 25.0, 25.0,
+
+    -25.0, -25.0,  -25.0,
+    -25.0, -25.0,  25.0,
+    -25.0,  25.0,  25.0,
+
+    -25.0,  25.0,  25.0,
+    -25.0,  25.0,  -25.0,
+    -25.0, -25.0,  -25.0,
+
+    25.0, -25.0,  -25.0,
+    -25.0, -25.0,  -25.0,
+    -25.0,  25.0,  -25.0,
+
+    -25.0,  25.0,  -25.0,
+    25.0 , 25.0, -25.0,
+    25.0, -25.0,  -25.0,
+
+    25.0,  -25.0,  25.0,
+    -25.0,  -25.0,  25.0,
+    -25.0, -25.0,  -25.0,
+
+    -25.0, -25.0,  -25.0,
+    25.0,  -25.0,  -25.0,
+    25.0,  -25.0,  25.0,
+
+    -25.0,  25.0,  -25.0,
+    -25.0,  25.0,  25.0,
+    25.0, 25.0,  25.0,
+
+    25.0, 25.0,  25.0,
+    25.0,  25.0,  -25.0,
+    -25.0,  25.0,  -25.0
+
+] );
 function preModel(){
     brickImg = new THREE.TextureLoader().load( "textures/blocks/brick.png" );
     branchImg = new THREE.TextureLoader().load( "textures/models/timg.jpg" );
@@ -70,10 +120,17 @@ function preModel(){
     var material3 = new THREE.MeshPhongMaterial( {
         map: grassImg } );
     var materials = [material1, material1, material3, material2,material1,material1];
-    cubeMaterial = new THREE.MeshFaceMaterial(materials);
-    cubeGeo = new THREE.BoxGeometry( 50, 50, 50 );
-    initRock = new THREE.Mesh(cubeGeo,cubeMaterial);
-
+    var material =  new THREE.MeshLambertMaterial({
+        // wireframe:true,
+        side:THREE.DoubleSide,
+        map:atlasImg
+    });
+    var geo= new THREE.BufferGeometry();
+    geo.addAttribute( 'position', new THREE.BufferAttribute( vertices, 3 ) );
+    geo.computeVertexNormals();
+    initRock = new THREE.Mesh(geo,material);
+    initRock.position.set(100,100,100);
+    scene.add(initRock);
 
     var loader = new THREE.OBJLoader();
     loader.load('model/AL06a.obj', function (geometry) {

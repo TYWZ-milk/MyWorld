@@ -69,7 +69,7 @@ function loadGround() {
     var texture2 = THREE.ImageUtils.loadTexture("textures/blocks/grass.png");
     texture2.wrapS = THREE.RepeatWrapping;
     texture2.wrapT = THREE.RepeatWrapping;
-    texture2.repeat.set(100,100);
+    texture2.repeat.set(50,50);
     var plane = new THREE.PlaneGeometry(5000,5000);
     plane.rotateX(-Math.PI/2);
     return new THREE.Mesh(plane, new THREE.MeshLambertMaterial({

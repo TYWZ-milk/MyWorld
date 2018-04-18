@@ -3,11 +3,24 @@
  */
 
 function mountain(){
-    for(var i = 0 ; i <5 ; i++){
+    var x = -50, z = -50, y = 0;
+    for(var i = 0 ; i <2725 ; i++){
         var normalrock = new NormalRock();
         normalrock.init();
-        normalrock.instance(i*50+25,i*50+25,i*50+25);
+        normalrock.instance(x*50+25,y*50+25,z*50+25);
+        var random = Math.floor(Math.random() * 2 + 1);
+        x+=random;
+        if(x >  -25){
+            z++;
+            if(z > -25){
+                x = y+1 - 50;z = y+1 - 50; y++;
+            }
+            else{
+                x = y + random - 50;
+            }
+        }
         scene.add(normalrock.mesh);
+        objects.push(normalrock.mesh);
     }
 }
 function NormalRock(){
