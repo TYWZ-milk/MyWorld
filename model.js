@@ -120,7 +120,7 @@ function preModel(){
     var material3 = new THREE.MeshPhongMaterial( {
         map: grassImg } );
     var materials = [material1, material1, material3, material2,material1,material1];
-    var material =  new THREE.MeshLambertMaterial({
+/*    var material =  new THREE.MeshLambertMaterial({
         // wireframe:true,
         side:THREE.DoubleSide,
         map:atlasImg
@@ -130,7 +130,9 @@ function preModel(){
     geo.computeVertexNormals();
     initRock = new THREE.Mesh(geo,material);
     initRock.position.set(100,100,100);
-    scene.add(initRock);
+    scene.add(initRock);*/
+    var geo = new THREE.BoxGeometry(50,50,50);
+    initRock = new THREE.Mesh(geo,materials);
 
     var loader = new THREE.OBJLoader();
     loader.load('model/AL06a.obj', function (geometry) {

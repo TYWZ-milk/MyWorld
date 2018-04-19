@@ -4,15 +4,15 @@
 
 function mountain(){
     var x = -50, z = -50, y = 0;
-    for(var i = 0 ; i <2725 ; i++){
+    for(var i = 0 ; i <5725 ; i++){
         var normalrock = new NormalRock();
         normalrock.init();
         normalrock.instance(x*50+25,y*50+25,z*50+25);
-        var random = Math.floor(Math.random() * 2 + 1);
+        var random = Math.floor(Math.random() * 3 + 1);
         x+=random;
-        if(x >  -25){
+        if(x >  -10 -y){
             z++;
-            if(z > -25){
+            if(z > -10 -y){
                 x = y+1 - 50;z = y+1 - 50; y++;
             }
             else{

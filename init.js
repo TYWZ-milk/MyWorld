@@ -3,7 +3,7 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
 var container,voxel;
 var camera, scene, renderer;
-var plane, cube;
+var plane;
 var mouse, raycaster, isShiftDown = false;
 
 var rollOverMesh, rollOverMaterial,rollOverGeo;
@@ -42,11 +42,11 @@ function init(){
     preModel();
     scene.add(loadGround());
     loadSky();
+    initGui();
     loadScene();
 
     renderer = new THREE.WebGLRenderer( { antialias: true} );//生成渲染器对象，锯齿效果为true
     renderer.setClearColor( 0xf0f0f0 );
-    renderer.setPixelRatio( window.devicePixelRatio );
     renderer.setSize( window.innerWidth, window.innerHeight );
 
     orbitControl = new THREE.OrbitControls( camera, renderer.domElement );
@@ -94,46 +94,248 @@ function loadSky() {
     scene.add( skyBox );
 }
 function loadScene(){
-    mountain();
+    //mountain();
 }
 
-function method2(){
-    methodfollow2();
-    // 实体对象，就是鼠标点击确定之后的实体对象，并且实体对象的图片引入
-    cubeGeo = new THREE.SphereGeometry( 50, 10, 10 );
-    cubeMaterial = new THREE.MeshLambertMaterial( { color: 0x4D662D/*, map: new THREE.TextureLoader().load( "textures/square-outline-textured.png" )*/ } );
-}
-function method3(){
-    methodfollow3();
-    // 实体对象，就是鼠标点击确定之后的实体对象，并且实体对象的图片引入
-    cubeGeo = new THREE.CubeGeometry( 50, 100, 50 );
-    cubeMaterial = new THREE.MeshLambertMaterial( { color: 0x4D662D/*, map: new THREE.TextureLoader().load( "textures/square-outline-textured.png" )*/ } );
-}
-function method5(){
-    window.open("newwindows.html","_blank","resizable=yes,scrollbars=yes,titlebar=yes,windth=800,height=800");
-}
+function initGui(){
+    var cubecontrols = new function (){
+        this.brick = function (){
+            cubeBuild('brick');
+        };
+        this.nether_brick = function (){
+            cubeBuild('nether_brick');
+        };
+        this.bookshelf = function (){
+            cubeBuild('bookshelf');
+        };
+        this.normal = function (){
+            cubeBuild('normal');
+        };
+        this.mycelium = function (){
+            cubeBuild('mycelium');
+        };
+        this.obsidian = function (){
+            cubeBuild('obsidian');
+        };
+        this.netherrack = function (){
+            cubeBuild('netherrack');
+        };
+        this.stonewall = function (){
+            cubeBuild('stonewall');
+        };
+        this.mossywall = function (){
+            cubeBuild('mossywall');
+        };
+        this.endstone = function (){
+            cubeBuild('endstone');
+        };
+        this.gravel = function (){
+            cubeBuild('gravel');
+        };
+        this.dessert = function (){
+            cubeBuild('dessert');
+        };
+        this.sand_stone = function (){
+            cubeBuild('sand_stone');
+        };
+        this.granite = function (){
+            cubeBuild('granite');
+        };
+        this.dirt = function (){
+            cubeBuild('dirt');
+        };
+        this.ice = function (){
+            cubeBuild('ice');
+        };
+        this.hay = function (){
+            cubeBuild('hay');
+        };
+        this.hardened_clay = function (){
+            cubeBuild('hardened_clay');
+        };
 
-function methodfollow2(){
-    scene.remove(rollOverMesh);
-    // 这个几何对象是鼠标在移动时候，跟随鼠标显示的几何对象
-    rollOverGeo = new THREE.SphereGeometry( 50, 10, 10 );//创建一个盒状几何对象
-    rollOverMaterial = new THREE.MeshBasicMaterial( { color: 0xff0000, opacity: 0.5, transparent: true } );
-    //创建一个色彩为红色的材料，透明度为半透明
-    rollOverMesh = new THREE.Mesh( rollOverGeo, rollOverMaterial );
-    //通过mesh方法把颜色应用到几何对象上
-    scene.add( rollOverMesh );
-    //最后把该立方体对象添加到场景scene中
-}
-function methodfollow3(){
-    scene.remove(rollOverMesh);
-    // 这个几何对象是鼠标在移动时候，跟随鼠标显示的几何对象
-    rollOverGeo = new THREE.CubeGeometry( 50, 100, 50 );//创建一个盒状几何对象
-    rollOverMaterial = new THREE.MeshBasicMaterial( { color: 0xff0000, opacity: 0.5, transparent: true } );
-    //创建一个色彩为红色的材料，透明度为半透明
-    rollOverMesh = new THREE.Mesh( rollOverGeo, rollOverMaterial );
-    //通过mesh方法把颜色应用到几何对象上
-    scene.add( rollOverMesh );
-    //最后把该立方体对象添加到场景scene中
+    };
+    var colorcubecontrols = new function (){
+        this.hardened_clay_stained_black = function (){
+            cubeBuild('hardened_clay_stained_black');
+        };
+        this.hardened_clay_stained_blue = function (){
+            cubeBuild('hardened_clay_stained_blue');
+        };
+        this.hardened_clay_stained_brown = function (){
+            cubeBuild('hardened_clay_stained_brown');
+        };
+        this.hardened_clay_stained_cyan = function (){
+            cubeBuild('hardened_clay_stained_cyan');
+        };
+        this.hardened_clay_stained_gray = function (){
+            cubeBuild('hardened_clay_stained_gray');
+        };
+        this.hardened_clay_stained_green = function (){
+            cubeBuild('hardened_clay_stained_green');
+        };
+        this.hardened_clay_stained_light_blue = function (){
+            cubeBuild('hardened_clay_stained_light_blue');
+        };
+        this.hardened_clay_stained_lime = function (){
+            cubeBuild('hardened_clay_stained_lime');
+        };
+        this.hardened_clay_stained_orange = function (){
+            cubeBuild('hardened_clay_stained_orange');
+        };
+        this.hardened_clay_stained_pink = function (){
+            cubeBuild('hardened_clay_stained_pink');
+        };
+        this.hardened_clay_stained_purple = function (){
+            cubeBuild('hardened_clay_stained_purple');
+        };
+        this.hardened_clay_stained_white = function (){
+            cubeBuild('hardened_clay_stained_white');
+        };
+        this.hardened_clay_stained_yellow = function (){
+            cubeBuild('hardened_clay_stained_yellow');
+        };
+        this.hardened_clay_stained_silver = function (){
+            cubeBuild('hardened_clay_stained_silver');
+        };
+        this.hardened_clay_stained_red = function (){
+            cubeBuild('hardened_clay_stained_red');
+        };
+    };
+    var planecontrols = new function (){
+        this.cobblestone = function (){
+            planeBuild('cobblestone');
+        };
+        this.water = function (){
+            planeBuild('water');
+        };
+        this.woodfloor = function (){
+            planeBuild('woodfloor');
+        };
+        this.grass = function (){
+            planeBuild('grass');
+        };
+        this.farmland_dry = function (){
+            planeBuild('farmland_dry');
+        };
+        this.farmland_wet = function (){
+            planeBuild('farmland_wet');
+        };
+        this.red_sand = function (){
+            planeBuild('red_sand');
+        };
+        this.sand = function (){
+            planeBuild('sand');
+        };
+        this.snow = function (){
+            planeBuild('snow');
+        };
+        this.clay = function (){
+            planeBuild('clay');
+        };
+    };
+    var modelcontrols = new function (){
+        this.tree1 = function (){
+            loadModel('tree1')
+        };
+        this.tree2 = function (){
+            loadModel('tree2')
+        };
+        this.tree3 = function (){
+            loadModel('tree3')
+        };
+        this.tree4 = function (){
+            loadModel('tree4')
+        };
+        this.cake = function (){
+            cylinderBuild('cake')
+        };
+    };
+    var upplanecontrols = new function (){
+        this.daywindow = function (){
+            upplaneBuild('daywindow')
+        };
+        this.irondoor = function (){
+            upplaneBuild('irondoor')
+        };
+    };
+    var scenecontrols = new function (){
+        this.direction = function (){
+            direction()
+        };
+        this.delete = function (){
+            for(var i=0 ; i <objects.length;i++){
+                if(objects[i].geometry.type != "PlaneBufferGeometry")
+                    scene.remove(objects[i]);
+            }
+        };
+    };
+
+    var sceneGui = new dat.GUI();
+    sceneGui.add(scenecontrols, "direction").name("改变物体方向");
+    sceneGui.add(scenecontrols, "delete").name("清空画面");
+
+    var upplaneGui = new dat.GUI();
+    upplaneGui.add(upplanecontrols, "daywindow").name("窗户");
+    upplaneGui.add(upplanecontrols, "irondoor").name("门");
+
+    var modelGui = new dat.GUI();
+    modelGui.add(modelcontrols,"cake").name("蛋糕");
+    modelGui.add(modelcontrols,"tree1").name("树1");
+    modelGui.add(modelcontrols,"tree2").name("树2");
+    modelGui.add(modelcontrols,"tree3").name("树3");
+    modelGui.add(modelcontrols,"tree4").name("树4");
+
+    var planeGui = new dat.GUI();
+    planeGui.add(planecontrols, 'cobblestone').name("石面");
+    planeGui.add(planecontrols, 'water').name("水");
+    planeGui.add(planecontrols, 'woodfloor').name("木地板");
+    planeGui.add(planecontrols, 'grass').name("草地");
+    planeGui.add(planecontrols, 'farmland_dry').name("耕地");
+    planeGui.add(planecontrols, 'farmland_wet').name("黑土");
+    planeGui.add(planecontrols, 'red_sand').name("红沙");
+    planeGui.add(planecontrols, 'sand').name("沙地");
+    planeGui.add(planecontrols, 'snow').name("雪地");
+    planeGui.add(planecontrols, 'clay').name("黏土");
+
+
+    var colorcubeGui = new dat.GUI();
+    colorcubeGui.add(colorcubecontrols, 'hardened_clay_stained_black').name("岩石(黑色)");
+    colorcubeGui.add(colorcubecontrols, 'hardened_clay_stained_blue').name("岩石(蓝色)");
+    colorcubeGui.add(colorcubecontrols, 'hardened_clay_stained_brown').name("岩石(棕色)");
+    colorcubeGui.add(colorcubecontrols, 'hardened_clay_stained_cyan').name("岩石(蓝绿色)");
+    colorcubeGui.add(colorcubecontrols, 'hardened_clay_stained_gray').name("岩石(灰色)");
+    colorcubeGui.add(colorcubecontrols, 'hardened_clay_stained_green').name("岩石(绿色)");
+    colorcubeGui.add(colorcubecontrols, 'hardened_clay_stained_light_blue').name("岩石(淡蓝色)");
+    colorcubeGui.add(colorcubecontrols, 'hardened_clay_stained_lime').name("岩石(亮绿色)");
+    colorcubeGui.add(colorcubecontrols, 'hardened_clay_stained_orange').name("岩石(橘色)");
+    colorcubeGui.add(colorcubecontrols, 'hardened_clay_stained_pink').name("岩石(粉色)");
+    colorcubeGui.add(colorcubecontrols, 'hardened_clay_stained_purple').name("岩石(紫色)");
+    colorcubeGui.add(colorcubecontrols, 'hardened_clay_stained_red').name("岩石(红色)");
+    colorcubeGui.add(colorcubecontrols, 'hardened_clay_stained_white').name("岩石(白色)");
+    colorcubeGui.add(colorcubecontrols, 'hardened_clay_stained_yellow').name("岩石(黄色)");
+    colorcubeGui.add(colorcubecontrols, 'hardened_clay_stained_silver').name("岩石(银色)");
+
+    var cubeGui = new dat.GUI();
+    cubeGui.add(cubecontrols,'brick').name("砖墙");
+    cubeGui.add(cubecontrols,'nether_brick').name("旧砖墙");
+    cubeGui.add(cubecontrols,'bookshelf').name("书架");
+    cubeGui.add(cubecontrols,'normal').name("岩石(有植被)");
+    cubeGui.add(cubecontrols,'mycelium').name("岩石(真菌覆盖)");
+    cubeGui.add(cubecontrols,'obsidian').name("黑曜石");
+    cubeGui.add(cubecontrols,'netherrack').name("地狱石");
+    cubeGui.add(cubecontrols,'stonewall').name("石墙");
+    cubeGui.add(cubecontrols,'mossywall').name("苔藓墙");
+    cubeGui.add(cubecontrols,'endstone').name("白石");
+    cubeGui.add(cubecontrols,'gravel').name("砾石");
+    cubeGui.add(cubecontrols,'dessert').name("黄石");
+    cubeGui.add(cubecontrols,'sand_stone').name("沙石");
+    cubeGui.add(cubecontrols,'granite').name("花岗岩");
+    cubeGui.add(cubecontrols,'dirt').name("岩层");
+    cubeGui.add(cubecontrols,'ice').name("冰块");
+    cubeGui.add(cubecontrols,'hay').name("干草堆");
+    cubeGui.add(cubecontrols,'hardened_clay').name("硬化黏土");
+
 }
 
 function onWindowResize() {
