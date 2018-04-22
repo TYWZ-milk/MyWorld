@@ -40,10 +40,9 @@ function init(){
     scene.add( directionalLight );
 
     preModel();
-    scene.add(loadGround());
-    loadSky();
+    loadGround('default');
+    loadSky('default');
     initGui();
-    loadScene();
 
     renderer = new THREE.WebGLRenderer( { antialias: true} );//生成渲染器对象，锯齿效果为true
     renderer.setClearColor( 0xf0f0f0 );
@@ -64,22 +63,39 @@ function init(){
     window.addEventListener( 'resize', onWindowResize, false );//窗口改变事件
     render();//渲染
 }
-function loadGround() {
+var Ground;
+function loadGround(ground) {
     //add ground
-    var texture2 = THREE.ImageUtils.loadTexture("textures/blocks/grass.png");
+    scene.remove(Ground);
+    if(ground == 'default') {
+        var texture2 = THREE.ImageUtils.loadTexture("textures/blocks/grass.png");
+    }
+    else if(ground == 'desert'){
+        var texture2 = sandImg;
+    }
     texture2.wrapS = THREE.RepeatWrapping;
     texture2.wrapT = THREE.RepeatWrapping;
     texture2.repeat.set(50,50);
     var plane = new THREE.PlaneGeometry(5000,5000);
     plane.rotateX(-Math.PI/2);
-    return new THREE.Mesh(plane, new THREE.MeshLambertMaterial({
+    Ground = new THREE.Mesh(plane, new THREE.MeshLambertMaterial({
         map: texture2
     }));
+    scene.add(Ground);
 }
-function loadSky() {
-    var path = "textures/skybox/";//设置路径
-    var directions  = ["px", "nx", "py", "ny", "pz", "nz"];//获取对象
-    var format = ".jpg";//格式
+var skyBox;
+function loadSky(sky) {
+    scene.remove(skyBox);
+    if(sky == 'desert') {
+        var path = "textures/skybox/";//设置路径
+        var directions = ["px", "nx", "py", "ny", "pz", "nz"];//获取对象
+        var format = ".jpg";//格式
+    }
+    else if(sky == 'default'){
+        var path = "textures/skybox/";//设置路径
+        var directions = ["riverside_south", "riverside_north" , "riverside_up", "riverside_down","riverside_east", "riverside_west"];//获取对象
+        var format = ".BMP";//格式
+    }
     //创建盒子，并设置盒子的大小为( 5000, 5000, 5000 )
     var skyGeometry = new THREE.BoxGeometry( 5000, 5000, 5000 );
     //设置盒子材质
@@ -90,11 +106,8 @@ function loadSky() {
             side: THREE.BackSide/*镜像翻转，如果设置镜像翻转，那么只会看到黑漆漆的一片，因为你身处在盒子的内部，所以一定要设置镜像翻转。*/
         }));
     var skyMaterial = new THREE.MeshFaceMaterial( materialArray );
-    var skyBox = new THREE.Mesh( skyGeometry, skyMaterial );//创建一个完整的天空盒，填入几何模型和材质的参数
+    skyBox = new THREE.Mesh( skyGeometry, skyMaterial );//创建一个完整的天空盒，填入几何模型和材质的参数
     scene.add( skyBox );
-}
-function loadScene(){
-    //mountain();
 }
 
 function initGui(){
@@ -269,72 +282,84 @@ function initGui(){
                     scene.remove(objects[i]);
             }
         };
+        this.defaultScene = function () {
+            this.delete();
+            loadGround('default');
+            loadSky('default');
+        };
+        this.desert = function () {
+            this.delete();
+            loadGround('desert');
+            loadSky('desert');
+        }
     };
+    var gui = new dat.GUI();
+    var sceneFolder = gui.addFolder( '场景控制' );
+    var upplaneFolder = gui.addFolder( '直立物体' );
+    var modelFolder = gui.addFolder( '模型' );
+    var planeFolder = gui.addFolder('地表');
+    var colorFolder = gui.addFolder('多色岩石');
+    var cubeFolder = gui.addFolder('立方体模型');
 
-    var sceneGui = new dat.GUI();
-    sceneGui.add(scenecontrols, "direction").name("改变物体方向");
-    sceneGui.add(scenecontrols, "delete").name("清空画面");
+    sceneFolder.add(scenecontrols, "direction").name("改变物体方向");
+    sceneFolder.add(scenecontrols, "delete").name("清空画面");
+    sceneFolder.add(scenecontrols, "defaultScene").name("默认场景");
+    sceneFolder.add(scenecontrols, "desert").name("沙漠");
 
-    var upplaneGui = new dat.GUI();
-    upplaneGui.add(upplanecontrols, "daywindow").name("窗户");
-    upplaneGui.add(upplanecontrols, "irondoor").name("门");
+    upplaneFolder.add(upplanecontrols, "daywindow").name("窗户");
+    upplaneFolder.add(upplanecontrols, "irondoor").name("门");
 
-    var modelGui = new dat.GUI();
-    modelGui.add(modelcontrols,"cake").name("蛋糕");
-    modelGui.add(modelcontrols,"tree1").name("树1");
-    modelGui.add(modelcontrols,"tree2").name("树2");
-    modelGui.add(modelcontrols,"tree3").name("树3");
-    modelGui.add(modelcontrols,"tree4").name("树4");
-
-    var planeGui = new dat.GUI();
-    planeGui.add(planecontrols, 'cobblestone').name("石面");
-    planeGui.add(planecontrols, 'water').name("水");
-    planeGui.add(planecontrols, 'woodfloor').name("木地板");
-    planeGui.add(planecontrols, 'grass').name("草地");
-    planeGui.add(planecontrols, 'farmland_dry').name("耕地");
-    planeGui.add(planecontrols, 'farmland_wet').name("黑土");
-    planeGui.add(planecontrols, 'red_sand').name("红沙");
-    planeGui.add(planecontrols, 'sand').name("沙地");
-    planeGui.add(planecontrols, 'snow').name("雪地");
-    planeGui.add(planecontrols, 'clay').name("黏土");
-
-
-    var colorcubeGui = new dat.GUI();
-    colorcubeGui.add(colorcubecontrols, 'hardened_clay_stained_black').name("岩石(黑色)");
-    colorcubeGui.add(colorcubecontrols, 'hardened_clay_stained_blue').name("岩石(蓝色)");
-    colorcubeGui.add(colorcubecontrols, 'hardened_clay_stained_brown').name("岩石(棕色)");
-    colorcubeGui.add(colorcubecontrols, 'hardened_clay_stained_cyan').name("岩石(蓝绿色)");
-    colorcubeGui.add(colorcubecontrols, 'hardened_clay_stained_gray').name("岩石(灰色)");
-    colorcubeGui.add(colorcubecontrols, 'hardened_clay_stained_green').name("岩石(绿色)");
-    colorcubeGui.add(colorcubecontrols, 'hardened_clay_stained_light_blue').name("岩石(淡蓝色)");
-    colorcubeGui.add(colorcubecontrols, 'hardened_clay_stained_lime').name("岩石(亮绿色)");
-    colorcubeGui.add(colorcubecontrols, 'hardened_clay_stained_orange').name("岩石(橘色)");
-    colorcubeGui.add(colorcubecontrols, 'hardened_clay_stained_pink').name("岩石(粉色)");
-    colorcubeGui.add(colorcubecontrols, 'hardened_clay_stained_purple').name("岩石(紫色)");
-    colorcubeGui.add(colorcubecontrols, 'hardened_clay_stained_red').name("岩石(红色)");
-    colorcubeGui.add(colorcubecontrols, 'hardened_clay_stained_white').name("岩石(白色)");
-    colorcubeGui.add(colorcubecontrols, 'hardened_clay_stained_yellow').name("岩石(黄色)");
-    colorcubeGui.add(colorcubecontrols, 'hardened_clay_stained_silver').name("岩石(银色)");
-
-    var cubeGui = new dat.GUI();
-    cubeGui.add(cubecontrols,'brick').name("砖墙");
-    cubeGui.add(cubecontrols,'nether_brick').name("旧砖墙");
-    cubeGui.add(cubecontrols,'bookshelf').name("书架");
-    cubeGui.add(cubecontrols,'normal').name("岩石(有植被)");
-    cubeGui.add(cubecontrols,'mycelium').name("岩石(真菌覆盖)");
-    cubeGui.add(cubecontrols,'obsidian').name("黑曜石");
-    cubeGui.add(cubecontrols,'netherrack').name("地狱石");
-    cubeGui.add(cubecontrols,'stonewall').name("石墙");
-    cubeGui.add(cubecontrols,'mossywall').name("苔藓墙");
-    cubeGui.add(cubecontrols,'endstone').name("白石");
-    cubeGui.add(cubecontrols,'gravel').name("砾石");
-    cubeGui.add(cubecontrols,'dessert').name("黄石");
-    cubeGui.add(cubecontrols,'sand_stone').name("沙石");
-    cubeGui.add(cubecontrols,'granite').name("花岗岩");
-    cubeGui.add(cubecontrols,'dirt').name("岩层");
-    cubeGui.add(cubecontrols,'ice').name("冰块");
-    cubeGui.add(cubecontrols,'hay').name("干草堆");
-    cubeGui.add(cubecontrols,'hardened_clay').name("硬化黏土");
+    modelFolder.add(modelcontrols,"cake").name("蛋糕");
+    modelFolder.add(modelcontrols,"tree1").name("树1");
+    modelFolder.add(modelcontrols,"tree2").name("树2");
+    modelFolder.add(modelcontrols,"tree3").name("树3");
+    modelFolder.add(modelcontrols,"tree4").name("树4");
+    
+    planeFolder.add(planecontrols, 'cobblestone').name("石面");
+    planeFolder.add(planecontrols, 'water').name("水");
+    planeFolder.add(planecontrols, 'woodfloor').name("木地板");
+    planeFolder.add(planecontrols, 'grass').name("草地");
+    planeFolder.add(planecontrols, 'farmland_dry').name("耕地");
+    planeFolder.add(planecontrols, 'farmland_wet').name("黑土");
+    planeFolder.add(planecontrols, 'red_sand').name("红沙");
+    planeFolder.add(planecontrols, 'sand').name("沙地");
+    planeFolder.add(planecontrols, 'snow').name("雪地");
+    planeFolder.add(planecontrols, 'clay').name("黏土");
+    
+    colorFolder.add(colorcubecontrols, 'hardened_clay_stained_black').name("岩石(黑色)");
+    colorFolder.add(colorcubecontrols, 'hardened_clay_stained_blue').name("岩石(蓝色)");
+    colorFolder.add(colorcubecontrols, 'hardened_clay_stained_brown').name("岩石(棕色)");
+    colorFolder.add(colorcubecontrols, 'hardened_clay_stained_cyan').name("岩石(蓝绿色)");
+    colorFolder.add(colorcubecontrols, 'hardened_clay_stained_gray').name("岩石(灰色)");
+    colorFolder.add(colorcubecontrols, 'hardened_clay_stained_green').name("岩石(绿色)");
+    colorFolder.add(colorcubecontrols, 'hardened_clay_stained_light_blue').name("岩石(淡蓝色)");
+    colorFolder.add(colorcubecontrols, 'hardened_clay_stained_lime').name("岩石(亮绿色)");
+    colorFolder.add(colorcubecontrols, 'hardened_clay_stained_orange').name("岩石(橘色)");
+    colorFolder.add(colorcubecontrols, 'hardened_clay_stained_pink').name("岩石(粉色)");
+    colorFolder.add(colorcubecontrols, 'hardened_clay_stained_purple').name("岩石(紫色)");
+    colorFolder.add(colorcubecontrols, 'hardened_clay_stained_red').name("岩石(红色)");
+    colorFolder.add(colorcubecontrols, 'hardened_clay_stained_white').name("岩石(白色)");
+    colorFolder.add(colorcubecontrols, 'hardened_clay_stained_yellow').name("岩石(黄色)");
+    colorFolder.add(colorcubecontrols, 'hardened_clay_stained_silver').name("岩石(银色)");
+    
+    cubeFolder.add(cubecontrols,'brick').name("砖墙");
+    cubeFolder.add(cubecontrols,'nether_brick').name("旧砖墙");
+    cubeFolder.add(cubecontrols,'bookshelf').name("书架");
+    cubeFolder.add(cubecontrols,'normal').name("岩石(有植被)");
+    cubeFolder.add(cubecontrols,'mycelium').name("岩石(真菌覆盖)");
+    cubeFolder.add(cubecontrols,'obsidian').name("黑曜石");
+    cubeFolder.add(cubecontrols,'netherrack').name("地狱石");
+    cubeFolder.add(cubecontrols,'stonewall').name("石墙");
+    cubeFolder.add(cubecontrols,'mossywall').name("苔藓墙");
+    cubeFolder.add(cubecontrols,'endstone').name("白石");
+    cubeFolder.add(cubecontrols,'gravel').name("砾石");
+    cubeFolder.add(cubecontrols,'dessert').name("黄石");
+    cubeFolder.add(cubecontrols,'sand_stone').name("沙石");
+    cubeFolder.add(cubecontrols,'granite').name("花岗岩");
+    cubeFolder.add(cubecontrols,'dirt').name("岩层");
+    cubeFolder.add(cubecontrols,'ice').name("冰块");
+    cubeFolder.add(cubecontrols,'hay').name("干草堆");
+    cubeFolder.add(cubecontrols,'hardened_clay').name("硬化黏土");
 
 }
 
