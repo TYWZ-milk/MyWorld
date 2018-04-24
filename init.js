@@ -19,7 +19,7 @@ function init(){
     document.body.appendChild( container );//添加子节点
 
     camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );//设置透视投影的相机
-    camera.position.set( 500, 800, 1300 );//设置相机坐标
+    camera.position.set( 500, 100, 1300 );//设置相机坐标
     camera.lookAt( new THREE.Vector3() );//设置视野的中心坐标
 
     scene = new THREE.Scene();//设置场景,场景是一个三维空间，用Scene类声明一个对象scene
@@ -29,7 +29,6 @@ function init(){
     var geometry = new THREE.PlaneBufferGeometry( 5000, 5000 );
     geometry.rotateX( - Math.PI / 2 );
     plane = new THREE.Mesh( geometry, new THREE.MeshBasicMaterial( { visible: false } ) );
-    plane.position.y=-1000;
     scene.add( plane );
     objects.push( plane );
     // 创建环境光为灰色
@@ -46,7 +45,7 @@ function init(){
     initGui();
 
     renderer = new THREE.WebGLRenderer( { antialias: true} );//生成渲染器对象，锯齿效果为true
-    renderer.setClearColor( 0xf0f0f0 );
+    renderer.setClearColor( 0xE0FFFF );
     renderer.setSize( window.innerWidth, window.innerHeight );
 
     orbitControl = new THREE.OrbitControls( camera, renderer.domElement );
@@ -80,18 +79,22 @@ function loadGround(ground) {
     else if(ground == 'outdoor'){
         var texture2 = clayImg;
     }
-    else if(ground == 'valley'){
+    else if(ground == 'valley' || ground == 'grass'){
         var texture2 = grassImg;
     }
     texture2.wrapS = THREE.RepeatWrapping;
     texture2.wrapT = THREE.RepeatWrapping;
     texture2.repeat.set(50,50);
-    var plane = new THREE.PlaneGeometry(5000,5000);
+    if(ground != 'grass') {
+        var plane = new THREE.PlaneGeometry(5000, 5000);
+    }
+    else{
+        var plane = new THREE.PlaneGeometry(10000, 10000);
+    }
     plane.rotateX(-Math.PI/2);
     Ground = new THREE.Mesh(plane, new THREE.MeshLambertMaterial({
         map: texture2
     }));
-    Ground.position.y=-1000;
     scene.add(Ground);
 }
 var skyBox;
@@ -133,6 +136,7 @@ function loadSky(sky) {
         }));
     var skyMaterial = new THREE.MeshFaceMaterial( materialArray );
     skyBox = new THREE.Mesh( skyGeometry, skyMaterial );//创建一个完整的天空盒，填入几何模型和材质的参数
+    skyBox.position.y = 1000;
     scene.add( skyBox );
 }
 
@@ -327,11 +331,16 @@ function initGui(){
             this.delete();
             loadGround('outdoor');
             loadSky('outdoor');
-        }
+        };
         this.valley = function () {
             this.delete();
             loadGround('valley');
             loadSky('valley');
+        };
+        this.grass = function () {
+            this.delete();
+            loadGround('grass');
+            scene.remove(skyBox);
         }
     };
     var gui = new dat.GUI();
@@ -349,6 +358,7 @@ function initGui(){
     sceneFolder.add(scenecontrols, "polar").name("极地");
     sceneFolder.add(scenecontrols, "outdoor").name("户外");
     sceneFolder.add(scenecontrols, "valley").name("山谷");
+    sceneFolder.add(scenecontrols, "grass").name("草原");
 
     upplaneFolder.add(upplanecontrols, "daywindow").name("窗户");
     upplaneFolder.add(upplanecontrols, "irondoor").name("门");
