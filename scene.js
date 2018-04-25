@@ -28,7 +28,6 @@ function randomGrass(){
     }
 }
 function randomDesert(){
-    var x = -50, z = -50, y = 0;
     var geo = new THREE.BoxBufferGeometry(50,50,50);
     var material1 = new THREE.MeshPhongMaterial( {
         map: sand_stoneImg } );
@@ -42,43 +41,57 @@ function randomDesert(){
     var material = new THREE.MeshFaceMaterial(materials);
     var sandstone = new THREE.Mesh(geo,material);
 
-    //for(var i = 0 ; i <50 ; i++){
-        x = Math.floor(Math.random() * 50 -50); z = Math.floor(Math.random() * 50 -50); y = 0;
-        var level = 4;
-        var templevel = 4;
-        for(var j = 0; j<30;j++) {
+    for(var j = 0 ; j <50 ; j++){
+        var x = -51, z = -50, y = 0;
+        var sandpile = [];
+        for(var i = 0 ; i <15 ; i++){
             var mesh = sandstone.clone();
-            x++;
-            if (level == 0) {
+            var random = Math.floor(Math.random() * 3 + 1);
+            x+=random;
+            if(x >  -45 -y){
                 z++;
-                if (templevel == 0) {
-                    level = 1;
-                    x = y + 1 - 50;
-                    z = y + 1 - 50;
-                    y++;
+                if(z > -45 -y){
+                    x = y+1 - 50;z = y+1 - 50; y++;
                 }
-                else {
-                    templevel--;
-                    level = 4;
-                    x -= level;
+                else{
+                    x = y +random  - 50;
                 }
             }
-            mesh.position.set(x * 50 + 25, y * 50 + 25, z * 50 + 25);
-            scene.add(mesh);
+            mesh.position.set(x*50+25,y*50+25,z*50+25);
+            sandpile.push(mesh);
             objects.push(mesh);
-            level -- ;
-        //}
+        }
+        x = Math.floor(Math.random() * 80 + 1) * 50;
+        z = Math.floor(Math.random() * 60 + 1) * 50;
+        for(var i = 0 ;i<sandpile.length;i++){
+            sandpile[i].position.x += x;
+            sandpile[i].position.z += z;
+            scene.add(sandpile[i]);
+        }
     }
     var desertgeo = new THREE.PlaneBufferGeometry( 50,  50 );
     desertgeo.rotateX(-Math.PI/2);
-    var desertmaterial = new THREE.MeshLambertMaterial( {  map: red_sandImg } );
+    var desertmaterial = new THREE.MeshLambertMaterial( {  map: grassImg } );
     var desertmesh = new THREE.Mesh(desertgeo,desertmaterial);
     x = 50;z=49;
-    for(var i=0;i<5050;i++) {
+    for(var i=0;i<1000;i++) {
         var clone = desertmesh.clone();
         clone.position.set(x * 50 , 1, z * 50 + 25);
         x--;
-        if(x==-51){x=50;z--;}
+        if(x==10){x=50;z--;}
+        scene.add(clone);
+        objects.push(clone);
+    }
+    var rivergeo = new THREE.PlaneBufferGeometry( 50,  50 );
+    rivergeo.rotateX(-Math.PI/2);
+    var rivermaterial = new THREE.MeshLambertMaterial( {  map: waterImg } );
+    var rivermesh = new THREE.Mesh(rivergeo,rivermaterial);
+    x = -50;z=20;
+    for(var i=0;i<400;i++) {
+        var clone = rivermesh.clone();
+        clone.position.set(x * 50 + 25, 3, z * 50 + 25);
+        x++;
+        if(x==50){x=-50;z++;}
         scene.add(clone);
         objects.push(clone);
     }
