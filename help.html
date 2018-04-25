@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Start</title>
+    <title>Help</title>
     <style>.bg{
         width:100%;
         height:100%;
@@ -21,6 +21,9 @@
         top:0;
         filter: blur(5px);
 
+    }
+    .font{
+        margin: 10px 50px;
     }
     .drag{
         position: absolute;
@@ -55,12 +58,25 @@
         -webkit-animation-duration: 12s;
         -webkit-animation-direction: alternate;
     }
+        #container{
+            width: 700px;
+            height: 300px;
+            z-index: 12;
+            background: url(textures/blocks/atlas.png);
+            background-size:700px 300px;
+            position: absolute;
+            top: 140px;
+            left: 300px;
+            border-radius: 10px;
+        }
     </style>
     <link rel="stylesheet" type="text/css" href="css/button.css" >
 </head>
 <body>
-<a href="start.html" class="button button-glow button-border button-rounded button-primary">进入游戏</a>
-<a href="start.html" style="left:700px" class="button button-glow button-border button-rounded button-primary">查看帮助</a>
+<div id="container"><p class="font" style="margin-top: 70px">MyWorld是一款高度自由的游戏，该游戏以每一个玩家在三维空间中自由地创造和破坏不同种类的方块为主题。玩家在游戏中可以在不同场景中通过摧毁或创造方块以创造精妙绝伦的建筑物和艺术。</p>
+    <p class="font" >整个游戏没有剧情，玩家在游戏中自由建设和破坏，透过像积木一样来对元素进行组合与拼凑，轻而易举的就能制作出小木屋、城堡甚至城市，玩家可以通过自己创造的作品来体验上帝一般的感觉。</p>
+    <p class="font">MyWorld着重于让玩家去探索、交互，并且改变一个由一立方米大小的方块动态生成的地图。除了方块以外，环境功能还包括更换场景、植物、地表等其他物体。</p></div>
+<a href="start.html" class="button button-glow button-border button-rounded button-primary">返回</a>
 <div class="bg">
     <img class="anim_fade_image" src="textures/terrain/grasslight-big.jpg"/>
     <img src="textures/skybox/outnegx.jpg"/>

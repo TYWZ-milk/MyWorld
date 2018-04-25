@@ -131,7 +131,7 @@ function preModel(){
     initRock = new THREE.Mesh(geo,material);
     initRock.position.set(100,100,100);
     scene.add(initRock);*/
-    var geo = new THREE.BoxGeometry(50,50,50);
+    var geo = new THREE.BoxBufferGeometry(50,50,50);
     initRock = new THREE.Mesh(geo,materials);
 
     var loader = new THREE.OBJLoader();
@@ -178,7 +178,7 @@ function cubeBuild(cube){
     rotcontrols.detach(selected);
     cubeFollow();
     // 实体对象，就是鼠标点击确定之后的实体对象，并且实体对象的图片引入
-    cubeGeo = new THREE.BoxGeometry( 50, 50, 50 );
+    cubeGeo = new THREE.BoxBufferGeometry( 50, 50, 50 );
     if(cube=="brick")
         cubeMaterial = new THREE.MeshLambertMaterial( {  map: brickImg } );
     if(cube=="nether_brick")
@@ -281,7 +281,8 @@ function planeBuild(plane){
     rotcontrols.detach(selected);
     planeFollow();
     // 实体对象，就是鼠标点击确定之后的实体对象，并且实体对象的图片引入
-    cubeGeo = new THREE.BoxGeometry( 50, 10, 50 );
+    cubeGeo = new THREE.PlaneBufferGeometry( 50,  50 );
+    cubeGeo.rotateX(-Math.PI/2);
     if(plane=="water")
         cubeMaterial = new THREE.MeshLambertMaterial( {  map: waterImg  } );
     else if(plane=="red_sand")
@@ -302,9 +303,6 @@ function planeBuild(plane){
         cubeMaterial = new THREE.MeshLambertMaterial( {  map: farmland_dryImg } );
     else if(plane=="farmland_wet")
         cubeMaterial = new THREE.MeshLambertMaterial( {  map: farmland_wetImg } );
-    for(var i=0; i <cubeGeo.vertices.length;i++){
-        cubeGeo.vertices[i].y = -23;
-    }
 
 }
 function upplaneBuild(upplane){
@@ -312,7 +310,7 @@ function upplaneBuild(upplane){
     rotcontrols.detach(selected);
     upplaneFollow();
     // 实体对象，就是鼠标点击确定之后的实体对象，并且实体对象的图片引入
-    cubeGeo = new THREE.BoxGeometry( 1, 50, 50 );
+    cubeGeo = new THREE.BoxBufferGeometry( 1, 50, 50 );
     if(upplane=="daywindow")
         cubeMaterial = new THREE.MeshLambertMaterial( {  map: daywindowImg} );
     else if(upplane=="irondoor") {
@@ -344,7 +342,7 @@ function cylinderBuild(scylinder){
 function cubeFollow(){
     scene.remove(rollOverMesh);
     // 这个几何对象是鼠标在移动时候，跟随鼠标显示的几何对象
-    rollOverGeo = new THREE.BoxGeometry( 50, 50, 50 );//创建一个盒状几何对象
+    rollOverGeo = new THREE.BoxBufferGeometry( 50, 50, 50 );//创建一个盒状几何对象
     rollOverMaterial = new THREE.MeshBasicMaterial( { color: 0xff0000, opacity: 0.5, transparent: true } );
     //创建一个色彩为红色的材料，透明度为半透明
     rollOverMesh = new THREE.Mesh( rollOverGeo, rollOverMaterial );

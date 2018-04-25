@@ -10,7 +10,8 @@ var rollOverMesh, rollOverMaterial,rollOverGeo;
 var cubeGeo, cubeMaterial;
 var orbitControl,rotcontrols;
 var objects = [];
-
+var addobjects = [];
+var LevelDefine = [0,9000000,10000000];
 init();
 
 function init(){
@@ -18,7 +19,7 @@ function init(){
     container = document.createElement( 'div' );//使用createElement创建一个div，就是整个页面
     document.body.appendChild( container );//添加子节点
 
-    camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );//设置透视投影的相机
+    camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 100000 );//设置透视投影的相机
     camera.position.set( 500, 100, 1300 );//设置相机坐标
     camera.lookAt( new THREE.Vector3() );//设置视野的中心坐标
 
@@ -69,9 +70,12 @@ function loadGround(ground) {
     scene.remove(Ground);
     if(ground == 'default') {
         var texture2 = grassImg;
+        randomGrass();
+        river();
     }
     else if(ground == 'desert'){
         var texture2 = sandImg;
+        randomDesert();
     }
     else if(ground == 'polar'){
         var texture2 = snowImg;
@@ -308,37 +312,61 @@ function initGui(){
         };
         this.delete = function (){
             for(var i=0 ; i <objects.length;i++){
-                if(objects[i].geometry.type != "PlaneBufferGeometry")
-                    scene.remove(objects[i]);
+                scene.remove(addobjects[i]);
             }
+            addobjects = [];
         };
         this.defaultScene = function () {
-            this.delete();
+            for(var i=0 ; i <objects.length;i++){
+                scene.remove(objects[i]);
+            }
+            objects = [];
+            objects.push(plane);
             loadGround('default');
             loadSky('default');
         };
         this.desert = function () {
-            this.delete();
+            for(var i=0 ; i <objects.length;i++){
+                scene.remove(objects[i]);
+            }
+            objects = [];
+            objects.push(plane);
             loadGround('desert');
             loadSky('desert');
         };
         this.polar = function () {
-            this.delete();
+            for(var i=0 ; i <objects.length;i++){
+                scene.remove(objects[i]);
+            }
+            objects = [];
+            objects.push(plane);
             loadGround('polar');
             loadSky('polar');
         };
         this.outdoor = function () {
-            this.delete();
+            for(var i=0 ; i <objects.length;i++){
+                scene.remove(objects[i]);
+            }
+            objects = [];
+            objects.push(plane);
             loadGround('outdoor');
             loadSky('outdoor');
         };
         this.valley = function () {
-            this.delete();
+            for(var i=0 ; i <objects.length;i++){
+                scene.remove(objects[i]);
+            }
+            objects = [];
+            objects.push(plane);
             loadGround('valley');
             loadSky('valley');
         };
         this.grass = function () {
-            this.delete();
+            for(var i=0 ; i <objects.length;i++){
+                scene.remove(objects[i]);
+            }
+            objects = [];
+            objects.push(plane);
             loadGround('grass');
             scene.remove(skyBox);
         }
@@ -475,6 +503,8 @@ function onDocumentMouseDown( event ) {
                 voxel = new THREE.Mesh(cubeGeo, cubeMaterial);
                 voxel.position.copy(intersect.point).add(intersect.face.normal);
                 voxel.position.divideScalar(50).floor().multiplyScalar(50).addScalar(25);
+                if(cubeGeo.type == "PlaneBufferGeometry")
+                    voxel.position.y=3;
             }
             else{
                 voxel = new THREE.Mesh(cubeGeo, cubeMaterial);
@@ -484,6 +514,7 @@ function onDocumentMouseDown( event ) {
             }
             scene.add(voxel);
             objects.push(voxel);
+            addobjects.push(voxel);
         }
         render();
     }
@@ -498,8 +529,21 @@ function onDocumentKeyUp( event ) {
         case 16: isShiftDown = false; break;
     }
 }
+function elimination(){
+    for(var j=0,jl=objects.length;j<jl;j++) {
+        var dist = objects[j].position.clone();
+        dist.sub(camera.position);
+        dist = dist.x * dist.x + dist.y * dist.y + dist.z * dist.z ;
+        var le = 0;
+        for (var i = 0, il = LevelDefine.length; i < il; i++) {
+            if (dist > LevelDefine[i])le++;
+            else break;
+        }
+        objects[j].visible = (j % le == 0);
+    }
+}
 function render() {
-
+    //elimination();
     orbitControl.update();
     renderer.clear();
     renderer.render( scene, camera );
