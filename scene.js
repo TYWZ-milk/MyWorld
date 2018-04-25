@@ -96,6 +96,43 @@ function randomDesert(){
         objects.push(clone);
     }
 }
+function randomPolar(){
+    var geo = new THREE.BoxBufferGeometry(50,50,50);
+    var material1 = new THREE.MeshPhongMaterial( {
+        map: mycelium_sideImg } );
+    var material2 = new THREE.MeshPhongMaterial( {
+        map: mycelium_topImg } );
+    var materials = [material1, material1, material2, material2,material1,material1];
+    var sandstone = new THREE.Mesh(geo,materials);
+    for(var j = 0 ; j <50 ; j++){
+        var x = -51, z = -50, y = 0;
+        var sandpile = [];
+        for(var i = 0 ; i <30 ; i++){
+            var mesh = sandstone.clone();
+            var random = Math.floor(Math.random() * 3 + 1);
+            x+=random;
+            if(x >  -40 -y){
+                z++;
+                if(z > -40 -y){
+                    x = y+1 - 50;z = y+1 - 50; y++;
+                }
+                else{
+                    x = y +random  - 50;
+                }
+            }
+            mesh.position.set(x*50+25,y*50+25,z*50+25);
+            sandpile.push(mesh);
+            objects.push(mesh);
+        }
+        x = Math.floor(Math.random() * 80 + 1) * 50;
+        z = Math.floor(Math.random() * 80 + 1) * 50;
+        for(var i = 0 ;i<sandpile.length;i++){
+            sandpile[i].position.x += x;
+            sandpile[i].position.z += z;
+            scene.add(sandpile[i]);
+        }
+    }
+}
 function river(){
     var geo = new THREE.PlaneBufferGeometry( 50,  50 );
     geo.rotateX(-Math.PI/2);

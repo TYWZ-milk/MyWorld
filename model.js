@@ -476,20 +476,4 @@ function modelFollow(model){
             scene.add(rollOverMesh);
         });
     }
-    else if(model == "chess"){
-        loader = new THREE.AMFLoader();
-        loader.load( 'model/rook.amf', function ( amfobject ) {
-            amfobject.traverse(function (child) {
-                if (child instanceof THREE.Mesh) {
-                    child.material.depthTest = true;
-                    child.material = new THREE.MeshBasicMaterial({color: 0xff0000, opacity: 0.5, transparent: true});
-                    child.geometry.computeBoundingSphere();
-                }
-            });
-            amfobject.scale.set(20,20,20);
-            amfobject.rotation.x=-Math.PI/2;
-            rollOverMesh = amfobject;
-            scene.add(rollOverMesh);
-        } );
-    }
 }

@@ -79,6 +79,7 @@ function loadGround(ground) {
     }
     else if(ground == 'polar'){
         var texture2 = snowImg;
+        randomPolar();
     }
     else if(ground == 'outdoor'){
         var texture2 = clayImg;
