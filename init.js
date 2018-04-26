@@ -83,9 +83,12 @@ function loadGround(ground) {
     }
     else if(ground == 'outdoor'){
         var texture2 = clayImg;
+        randomOutdoor();
     }
     else if(ground == 'valley' || ground == 'grass'){
         var texture2 = grassImg;
+        if(ground == 'valley')
+            randomValley();
     }
     texture2.wrapS = THREE.RepeatWrapping;
     texture2.wrapT = THREE.RepeatWrapping;

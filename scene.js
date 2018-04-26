@@ -133,6 +133,121 @@ function randomPolar(){
         }
     }
 }
+function randomOutdoor(){
+    river();
+    var geo = new THREE.PlaneBufferGeometry( 50,  50 );
+    geo.rotateX(-Math.PI/2);
+    var material = new THREE.MeshLambertMaterial( {  map: farmland_dryImg } );
+    var mesh = new THREE.Mesh(geo,material);
+    var x = -47,z=-45;
+    var length = -32;
+    var originx = -47;
+    for(var j = 0;j<5;j++) {
+        for (var i = 0; i < 300; i++) {
+            var clone = mesh.clone();
+            clone.position.set(x * 50 + 25, 3, z * 50 + 25);
+            x++;
+            if (x == length) {
+                x = originx;
+                z++;
+            }
+            scene.add(clone);
+            objects.push(clone);
+        }
+        x+=20;z=-45;length+=20;
+        originx = originx + 20;
+    }
+    var stonegeo = new THREE.BoxBufferGeometry(50,50,50);
+    var stonematerial = new THREE.MeshPhongMaterial( {
+        map: stonewallImg } );
+    var stone = new THREE.Mesh(stonegeo,stonematerial);
+    x = -50;z=-23;
+    for(var i = 0 ;i <100;i++,x++){
+        var clone = stone.clone();
+        clone.position.set(x * 50 + 25, 25, z * 50 + 25);
+        scene.add(clone);
+        objects.push(clone);
+    }
+
+}
+function randomValley(){
+    var x = -50, z = -50, y = 0;
+    var geo = new THREE.BoxBufferGeometry(50,50,50);
+    var material = new THREE.MeshPhongMaterial( {
+        map: mossywallImg } );
+    var sandstone = new THREE.Mesh(geo,material);
+    for(var i = 0 ; i <2000 ; i++){
+        var mesh = sandstone.clone();
+        var random = Math.floor(Math.random() * 5 + 1);
+        x+=random;
+        if(x >  48 -y){
+            z++;
+            if(z > -35 -y){
+                x = y+1 - 50;z = y+1 - 50; y++;
+            }
+            else{
+                x = y + random - 50;
+            }
+        }
+        mesh.position.set(x*50+25,y*50+25,z*50+25);
+        scene.add(mesh);
+        objects.push(mesh);
+    }
+    x = -50;z=49;y=0;
+    for(var i = 0 ; i <2000 ; i++){
+        var mesh = sandstone.clone();
+        var random = Math.floor(Math.random() * 5 + 1);
+        x+=random;
+        if(x >  48 -y){
+            z--;
+            if(z < 35 + y){
+                x = y+1 - 50;z = -y - 1 + 50; y++;
+            }
+            else{
+                x = y + random - 50;
+            }
+        }
+        mesh.position.set(x*50+25,y*50+25,z*50+25);
+        scene.add(mesh);
+        objects.push(mesh);
+    }
+    x = -50;z=49;y=0;
+    for(var i = 0 ; i <2000 ; i++){
+        var mesh = sandstone.clone();
+        var random = Math.floor(Math.random() * 5 + 1);
+        x+=random;
+        if(x >  48 -y){
+            z--;
+            if(z < 35 + y){
+                x = y+1 - 50;z = -y - 1 + 50; y++;
+            }
+            else{
+                x = y + random - 50;
+            }
+        }
+        mesh.position.set(z*50+25,y*50+25,x*50+25);
+        scene.add(mesh);
+        objects.push(mesh);
+    }
+    x = -50; z = -50; y = 0;
+    for(var i = 0 ; i <2000 ; i++){
+        var mesh = sandstone.clone();
+        var random = Math.floor(Math.random() * 5 + 1);
+        x+=random;
+        if(x >  48 -y){
+            z++;
+            if(z > -35 -y){
+                x = y+1 - 50;z = y+1 - 50; y++;
+            }
+            else{
+                x = y + random - 50;
+            }
+        }
+        mesh.position.set(z*50+25,y*50+25,x*50+25);
+        scene.add(mesh);
+        objects.push(mesh);
+    }
+}
 function river(){
     var geo = new THREE.PlaneBufferGeometry( 50,  50 );
     geo.rotateX(-Math.PI/2);
