@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Start</title>
+    <title>Pokect World</title>
     <style>.bg{
         width:100%;
         height:100%;
@@ -22,16 +22,12 @@
         filter: blur(5px);
 
     }
-    .drag{
+    .logo{
         position: absolute;
-        left:50%;
-        top:50%;
-        transform: translate(-50%,-50%);
-        width:200px;
-        height:200px;
-        text-align: center;
-
-        z-index:11;
+        z-index: 10;
+        left: 60px;
+        height: 800px;
+        top: -100px;
     }
     @-webkit-keyframes fadeInOut {
         0% {
@@ -59,8 +55,9 @@
     <link rel="stylesheet" type="text/css" href="css/button.css" >
 </head>
 <body>
-<a href="start.html" class="button button-glow button-border button-rounded button-primary">进入游戏</a>
-<a href="start.html" style="left:700px" class="button button-glow button-border button-rounded button-primary">查看帮助</a>
+<img class="logo" src="textures/logo.png"/>
+<a href="index.html" class="button button-glow button-border button-rounded button-primary">进入游戏</a>
+<a href="help.html" style="left:700px" class="button button-glow button-border button-rounded button-primary">查看帮助</a>
 <div class="bg">
     <img class="anim_fade_image" src="textures/terrain/grasslight-big.jpg"/>
     <img src="textures/skybox/outnegx.jpg"/>
