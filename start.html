@@ -29,6 +29,13 @@
         height: 800px;
         top: -100px;
     }
+    .music_logo{
+        position: absolute;
+        top: 30px;
+        z-index: 15;
+        left: 30px;
+
+    }
     @-webkit-keyframes fadeInOut {
         0% {
             opacity:1;
@@ -62,5 +69,21 @@
     <img class="anim_fade_image" src="textures/terrain/grasslight-big.jpg"/>
     <img src="textures/skybox/outnegx.jpg"/>
 </div>
+<audio id="music2" src="music/C418%20-%20Eleven.mp3" autoplay="autoplay" loop="loop"></audio>
+<a class="music_logo" href="javascript:playPause();"><img src="textures/music_play.png" width="48" height="50" id="music_btn2" border="0"></a>
 </body>
+<script>
+    function playPause() {
+        var music = document.getElementById('music2');
+        var music_btn = document.getElementById('music_btn2');
+        if (music.paused){
+            music.play();
+            music_btn.src = 'textures/music_play.png';
+        }
+        else{
+            music.pause();
+            music_btn.src = 'textures/music_pause.png';
+        }
+    }
+</script>
 </html>
