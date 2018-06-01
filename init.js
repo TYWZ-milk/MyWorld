@@ -400,7 +400,7 @@ function initGui(){
     modelFolder.add(modelcontrols,"tree2").name("树2");
     modelFolder.add(modelcontrols,"tree3").name("树3");
     modelFolder.add(modelcontrols,"tree4").name("树4");
-    
+
     planeFolder.add(planecontrols, 'cobblestone').name("石面");
     planeFolder.add(planecontrols, 'water').name("水");
     planeFolder.add(planecontrols, 'woodfloor').name("木地板");
@@ -427,7 +427,7 @@ function initGui(){
     colorFolder.add(colorcubecontrols, 'hardened_clay_stained_white').name("岩石(白色)");
     colorFolder.add(colorcubecontrols, 'hardened_clay_stained_yellow').name("岩石(黄色)");
     colorFolder.add(colorcubecontrols, 'hardened_clay_stained_silver').name("岩石(银色)");
-    
+
     cubeFolder.add(cubecontrols,'brick').name("砖墙");
     cubeFolder.add(cubecontrols,'nether_brick').name("旧砖墙");
     cubeFolder.add(cubecontrols,'bookshelf').name("书架");
@@ -534,7 +534,10 @@ function onDocumentKeyUp( event ) {
     }
 }
 function elimination(){
+    var cameraMatrix = new THREE.Matrix4().multiplyMatrices(camera.projectionMatrix,camera.matrixWorldInverse);
     for(var j=0,jl=objects.length;j<jl;j++) {
+        var point = new THREE.Vector3(objects[j].position.x,objects[j].position.y,objects[j].position.z);
+        var z = point.applyMatrix4(cameraMatrix).z;
         var dist = objects[j].position.clone();
         dist.sub(camera.position);
         dist = dist.x * dist.x + dist.y * dist.y + dist.z * dist.z ;
@@ -544,10 +547,14 @@ function elimination(){
             else break;
         }
         objects[j].visible = (j % le == 0);
+        if(objects[j].visible == true)
+            objects[j].visible = z <= 1;
     }
 }
+
+
 function render() {
-    //elimination();
+    elimination();
     orbitControl.update();
     renderer.clear();
     renderer.render( scene, camera );

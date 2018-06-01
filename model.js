@@ -100,7 +100,7 @@ function preModel(){
     sandstone_bottomImg = new THREE.ImageUtils.loadTexture('textures/blocks/sandstone_bottom.png');
     sandstone_topImg = new THREE.ImageUtils.loadTexture('textures/blocks/sandstone_top.png');
     sand_stonenormalImg = new THREE.ImageUtils.loadTexture('textures/blocks/sandstone_normal.png');
-    waterImg = new THREE.TextureLoader().load( "textures/blocks/water_flow.png");
+    waterImg = new THREE.TextureLoader().load( "textures/blocks/water_still.png");
     red_sandImg = new THREE.TextureLoader().load( "textures/blocks/red_sand.png" );
     sandImg = new THREE.TextureLoader().load( "textures/blocks/sand.png" );
     snowImg = new THREE.TextureLoader().load( "textures/blocks/snow.png" );

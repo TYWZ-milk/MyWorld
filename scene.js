@@ -41,9 +41,10 @@ function randomDesert(){
     var material = new THREE.MeshFaceMaterial(materials);
     var sandstone = new THREE.Mesh(geo,material);
 
-    var redsandgeo = new THREE.BoxBufferGeometry(50,50,50);
+    var redsandgeo = new THREE.BoxGeometry(50,50,50);
     var redsandmaterial = new THREE.MeshPhongMaterial({map:dessertImg});
     var redsand = new THREE.Mesh(redsandgeo,redsandmaterial);
+    var pyramidgeo = new THREE.Geometry();
     var x = 0, z = -48, y = 0;
     for(var i = 0 ; i <18400 ; i++){
         var mesh = redsand.clone();
@@ -58,9 +59,12 @@ function randomDesert(){
             }
         }
         mesh.position.set(x*50+25,y*50+25,z*50+25);
-        scene.add(mesh);
-        objects.push(mesh);
+        mesh.updateMatrix();
+        pyramidgeo.merge(mesh.geometry,mesh.matrix);
     }
+    var pyramid = new THREE.Mesh(pyramidgeo,redsandmaterial);
+    scene.add(pyramid);
+    objects.push(pyramid);
 
     for(var j = 0 ; j <50 ; j++){
         x = -51; z = -50; y = 0;
