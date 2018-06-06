@@ -147,7 +147,7 @@ function loadSky(sky) {
     skyBox.position.y = 1000;
     scene.add( skyBox );
 }
-
+var optimize = false;
 function initGui(){
     var cubecontrols = new function (){
         this.brick = function (){
@@ -311,6 +311,7 @@ function initGui(){
         };
     };
     var scenecontrols = new function (){
+        this.optimize = false;
         this.direction = function (){
             direction()
         };
@@ -383,6 +384,7 @@ function initGui(){
     var colorFolder = gui.addFolder('多色岩石');
     var cubeFolder = gui.addFolder('立方体模型');
 
+    sceneFolder.add(scenecontrols, 'optimize', false).name("开启渲染优化").onChange(changeOpti );
     sceneFolder.add(scenecontrols, "direction").name("改变物体方向");
     sceneFolder.add(scenecontrols, "delete").name("清空画面");
     sceneFolder.add(scenecontrols, "defaultScene").name("默认场景");
@@ -457,7 +459,16 @@ function onWindowResize() {
     renderer.setSize( window.innerWidth, window.innerHeight );
 
 }
-
+function changeOpti(){
+    if(optimize == true) {
+        optimize = false;
+        for(var i = 0 ;i <objects.length;i++){
+            objects[i].visible = true;
+        }
+    }
+    else
+        optimize = true;
+}
 function onDocumentMouseMove( event ) {
     event.preventDefault();//取消事件的默认动作
     mouse.set( ( event.clientX / window.innerWidth ) * 2 - 1, - ( event.clientY / window.innerHeight ) * 2 + 1 );
@@ -554,7 +565,8 @@ function elimination(){
 
 
 function render() {
-    elimination();
+    if(optimize == true)
+        elimination();
     orbitControl.update();
     renderer.clear();
     renderer.render( scene, camera );
