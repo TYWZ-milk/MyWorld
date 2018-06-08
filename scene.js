@@ -288,7 +288,7 @@ function river(){
         objects.push(clone);
     }
     x =40;z=-16;
-    for(var i=0;i<400;i++) {
+    for(var i=0;i<264;i++) {
         var clone = mesh.clone();
         clone.position.set(x * 50 + 25, 3, z * 50 + 25);
         x++;

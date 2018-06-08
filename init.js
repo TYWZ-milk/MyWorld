@@ -94,13 +94,18 @@ function loadGround(ground) {
     texture2.wrapT = THREE.RepeatWrapping;
     texture2.repeat.set(50,50);
     if(ground != 'grass') {
-        var plane = new THREE.PlaneGeometry(5000, 5000);
+        var newplane = new THREE.PlaneGeometry(5000, 5000);
     }
     else{
-        var plane = new THREE.PlaneGeometry(10000, 10000);
+        var newplane = new THREE.PlaneGeometry(10000, 10000);
+        scene.remove(plane);
+        var geometry = new THREE.PlaneBufferGeometry( 10000, 10000 );
+        geometry.rotateX( - Math.PI / 2 );
+        plane = new THREE.Mesh( geometry, new THREE.MeshBasicMaterial( { visible: false } ) );
+        scene.add( plane );
     }
-    plane.rotateX(-Math.PI/2);
-    Ground = new THREE.Mesh(plane, new THREE.MeshLambertMaterial({
+    newplane.rotateX(-Math.PI/2);
+    Ground = new THREE.Mesh(newplane, new THREE.MeshLambertMaterial({
         map: texture2
     }));
     scene.add(Ground);
@@ -112,29 +117,38 @@ function loadSky(sky) {
         var path = "textures/skybox/";//设置路径
         var directions = ["px", "nx", "py", "ny", "pz", "nz"];//获取对象
         var format = ".jpg";//格式
+        var skyGeometry = new THREE.BoxGeometry( 5000, 5000, 5000 );
     }
     else if(sky == 'default'){
         var path = "textures/skybox/";//设置路径
         var directions = ["riverside_west","riverside_east",  "riverside_up", "riverside_down" ,"riverside_south","riverside_north" ];//获取对象
         var format = ".BMP";//格式
+        var skyGeometry = new THREE.BoxGeometry( 5000, 5000, 5000 );
     }
     else if(sky == 'polar'){
         var path = "textures/skybox/";//设置路径
         var directions = ["posx" ,"negx",  "posy", "negy", "posz","negz"];//获取对象
         var format = ".jpg";//格式
+        var skyGeometry = new THREE.BoxGeometry( 5000, 5000, 5000 );
     }
     else if(sky == 'outdoor'){
         var path = "textures/skybox/";//设置路径
         var directions = [ "outposx" ,"outnegx", "outposy", "outnegy", "outposz","outnegz"];//获取对象
         var format = ".jpg";//格式
+        var skyGeometry = new THREE.BoxGeometry( 5000, 5000, 5000 );
     }
     else if(sky == 'valley'){
         var path = "textures/skybox/";//设置路径
         var directions =["lostvalley_west","lostvalley_east",  "lostvalley_up", "lostvalley_down" ,"lostvalley_south","lostvalley_north" ];
         var format = ".png";//格式
+        var skyGeometry = new THREE.BoxGeometry( 5000, 5000, 5000 );
     }
-    //创建盒子，并设置盒子的大小为( 5000, 5000, 5000 )
-    var skyGeometry = new THREE.BoxGeometry( 5000, 5000, 5000 );
+    else{
+        var path = "textures/skybox/";//设置路径
+        var directions =["lostvalley_west","lostvalley_east",  "lostvalley_up", "lostvalley_down" ,"lostvalley_south","lostvalley_north" ];
+        var format = ".png";//格式
+        var skyGeometry = new THREE.BoxGeometry( 10000, 10000, 10000 );
+    }
     //设置盒子材质
     var materialArray = [];
     for (var i = 0; i < 6; i++)
@@ -373,7 +387,7 @@ function initGui(){
             objects = [];
             objects.push(plane);
             loadGround('grass');
-            scene.remove(skyBox);
+            loadSky('dd');
         }
     };
     var gui = new dat.GUI();
