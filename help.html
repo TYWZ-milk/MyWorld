@@ -57,7 +57,7 @@
             width: 700px;
             height: 300px;
             z-index: 12;
-            background: url(textures/blocks/atlas.png);
+            /*background: url(screenshot/default1.png);*/
             background-size:700px 300px;
             position: absolute;
             top: 140px;
@@ -71,6 +71,10 @@
         left: 30px;
 
     }
+    .image_size{
+        width:1350px;
+        height:615px
+    }
     </style>
     <link rel="stylesheet" type="text/css" href="css/button.css" >
 </head>
@@ -83,8 +87,8 @@
 <audio id="music2" src="music/C418%20-%20Eleven.mp3" autoplay="autoplay" loop="loop"></audio>
 <a class="music_logo" href="javascript:playPause();"><img src="textures/music_play.png" width="48" height="50" id="music_btn2" border="0"></a>
 <div class="bg">
-    <img class="anim_fade_image" src="textures/terrain/grasslight-big.jpg"/>
-    <img src="textures/skybox/outnegx.jpg"/>
+    <img class="anim_fade_image image_size" src="screenshot/TIM图片20180606151157.png"/>
+    <img class="image_size" src="screenshot/desertScene.png"/>
 </div>
 </body><script>
     function playPause() {
