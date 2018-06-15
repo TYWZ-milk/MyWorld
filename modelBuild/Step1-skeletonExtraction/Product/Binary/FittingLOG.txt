@@ -1,0 +1,15 @@
+iter:   0 x =      1.00000000      1.00000000 |f(x)| = 761.939
+status = success
+iter:   1 x =     -0.00010884     -0.56104851 |f(x)| = 93.1349
+status = success
+iter:   2 x =     -0.00010812      0.06503731 |f(x)| = 11.7646
+status = success
+iter:   3 x =     -0.00010870     -0.00206418 |f(x)| = 0.0608725
+status = success
+iter:   4 x =     -0.00010871     -0.00196837 |f(x)| = 0.0585004
+status = cannot reach the specified tolerance in F
+iter:   5 x =     -0.00010871     -0.00196837 |f(x)| = 0.0585004
+chisq/dof = 7.694e-007
+P0  = -0.00011 +/- 0.00183
+P1  = -0.00197 +/- 0.00695
+status = cannot reach the specified tolerance in F

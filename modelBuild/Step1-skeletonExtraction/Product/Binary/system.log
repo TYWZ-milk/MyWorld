@@ -1,0 +1,54 @@
+-----------------------------------------------
+    2018/May/3 15:52:59
+    Wing 1.1.1
+-----------------------------------------------
+
+-----------------------------------------------
+Testing Utility ... 
+    - Testing Bitfields ... Passed.
+    - Testing DList_Shell ... Passed.
+    - Testing IDAllocator ... Passed.
+    - Testing SList_Shell ... Passed.
+    - Testing CLock ... Passed.
+    - Testing Memory ... Passed.
+    - Testing StringUtilities ... Failed!
+    - [Test Error]: 
+        TestStringUtilitiesImpl.h(111)
+        Strncatz(buffer, 0, _SU_T("sdfsdf")) == 0
+        TestStringUtilitiesImpl.h(114)
+        Strncatz(buffer, 5, _SU_T("True")) == 4
+        TestStringUtilitiesImpl.h(117)
+        buffer[2] == _SU_T('u')
+        TestStringUtilitiesImpl.h(118)
+        buffer[3] == _SU_T('e')
+        TestStringUtilitiesImpl.h(119)
+        buffer[4] == _SU_T('\0')
+        TestStringUtilitiesImpl.h(123)
+        buffer[2] == _SU_T('u')
+        TestStringUtilitiesImpl.h(124)
+        buffer[3] == _SU_T('e')
+        TestStringUtilitiesImpl.h(125)
+        buffer[4] == _SU_T('\0')
+        TestStringUtilitiesImpl.h(111)
+        Strncatz(buffer, 0, _SU_T("sdfsdf")) == 0
+        TestStringUtilitiesImpl.h(114)
+        Strncatz(buffer, 5, _SU_T("True")) == 4
+        TestStringUtilitiesImpl.h(117)
+        buffer[2] == _SU_T('u')
+        TestStringUtilitiesImpl.h(118)
+        buffer[3] == _SU_T('e')
+        TestStringUtilitiesImpl.h(119)
+        buffer[4] == _SU_T('\0')
+        TestStringUtilitiesImpl.h(123)
+        buffer[2] == _SU_T('u')
+        TestStringUtilitiesImpl.h(124)
+        buffer[3] == _SU_T('e')
+        TestStringUtilitiesImpl.h(125)
+        buffer[4] == _SU_T('\0')
+  Utility - 16 Errors.
+-----------------------------------------------
+Memory Statistics : 
+-----------------------------------------------
+Current memory used : 0 Bytes (Pool : 0 Bytes, List : 0 Bytes)
+Maximal memory used : 0 Bytes (Pool : 0 Bytes, List : 0 Bytes)
+-----------------------------------------------

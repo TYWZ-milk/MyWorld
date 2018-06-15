@@ -1,0 +1,182 @@
+
+texture BackTex < string name = "back.bmp";>;
+texture FrontTex < string name = "front.bmp";>;
+texture HeightTex < string name = "height.bmp";>;
+texture SpecularTex < string name = "Modelsspecular.bmp";>;
+texture TransparentTex < string name = "translucency.bmp";>;
+
+texture ShadowmapTex < string name = "ShadowMap";>;
+
+float4x4 WorldView : worldview;
+float4x4 WorldViewProj : worldviewprojection;
+float fTime : TIME;
+float3 eyePosition : cameraposition;
+
+struct VS_OUTPUT
+{
+    float4 Pos : POSITION;
+    float2 tex : TEXCOORD0;
+};
+
+VS_OUTPUT VS_Default(
+    float3 pos : POSITION, 
+    float3 nor : NORMAL, 
+    float2 tex : TEXCOORD0)
+{
+    VS_OUTPUT o;
+
+    o.Pos = mul(float4(pos, 1), WorldViewProj);
+    o.tex = tex;
+    
+    return o;
+}
+
+sampler BackMap = sampler_state
+{
+    texture = <BackTex>;
+    AddressU  = WRAP;
+    AddressV  = WRAP;
+    AddressW  = WRAP;
+    MIPFILTER = LINEAR;
+    MINFILTER = LINEAR;
+    MAGFILTER = LINEAR;
+};
+
+sampler FrontMap = sampler_state
+{
+    texture = <FrontTex>;
+    AddressU  = WRAP;
+    AddressV  = WRAP;
+    AddressW  = WRAP;
+    MIPFILTER = LINEAR;
+    MINFILTER = LINEAR;
+    MAGFILTER = LINEAR;
+};
+
+sampler HeightMap = sampler_state
+{
+    texture = <HeightTex>;
+    AddressU  = WRAP;
+    AddressV  = WRAP;
+    AddressW  = WRAP;
+    MIPFILTER = LINEAR;
+    MINFILTER = LINEAR;
+    MAGFILTER = LINEAR;
+};
+
+sampler SpecularMap = sampler_state
+{
+    texture = <SpecularTex>;
+    AddressU  = WRAP;
+    AddressV  = WRAP;
+    AddressW  = WRAP;
+    MIPFILTER = LINEAR;
+    MINFILTER = LINEAR;
+    MAGFILTER = LINEAR;
+};
+
+sampler TransparentMap = sampler_state
+{
+    texture = <TransparentTex>;
+    AddressU  = WRAP;
+    AddressV  = WRAP;
+    AddressW  = WRAP;
+    MIPFILTER = LINEAR;
+    MINFILTER = LINEAR;
+    MAGFILTER = LINEAR;
+};
+
+sampler ShadowMap = sampler_state
+{
+    texture = <ShadowmapTex>;
+    AddressU  = WRAP;
+    AddressV  = WRAP;
+    AddressW  = WRAP;
+    MIPFILTER = LINEAR;
+    MINFILTER = LINEAR;
+    MAGFILTER = LINEAR;
+};
+
+float4 PS_DepthPass(VS_OUTPUT input) : COLOR
+{
+    return float4(0,0,0,0);
+}
+
+float4 PS_LeafFront(VS_OUTPUT input) : COLOR
+{
+    float4 col;
+    
+    // sample front texture
+    float4 front_color = tex2D(FrontMap, input.tex);
+    float4 alpha_color = tex2D(TransparentMap, input.tex);
+
+    alpha_color *= 1.7;
+
+    col.rgb = front_color.rgb;
+    col.a = (alpha_color.r + alpha_color.g + alpha_color.b)/3;
+
+    return col;
+};
+
+float4 PS_LeafBack(VS_OUTPUT input) : COLOR
+{
+    float4 col;
+    
+    // sample front texture
+    float4 back_color = tex2D(BackMap, input.tex);
+    float4 alpha_color = tex2D(TransparentMap, input.tex);
+
+    alpha_color *= 1.7;
+
+    col.rgb = back_color.rgb;
+    col.a = (alpha_color.r + alpha_color.g + alpha_color.b)/3;
+
+    return col;
+};
+
+
+technique tec0
+{
+    pass p0
+    {
+        VertexShader = compile vs_2_0 VS_Default();
+        PixelShader = compile ps_2_0 PS_LeafFront();
+
+        FogEnable = false;
+        ZEnable = true;
+        ZWriteEnable = true;
+        
+        CullMode = CCW;
+        
+        // enable alpha blending
+        AlphaBlendEnable = true;
+        SrcBlend = SrcAlpha;
+        DestBlend = InvSrcAlpha;
+        
+        AlphaTestEnable = true;
+        AlphaFunc = GreaterEqual;
+        AlphaRef = 0x80;
+    }
+
+    pass p1
+    {
+        VertexShader = compile vs_2_0 VS_Default();
+        PixelShader = compile ps_2_0 PS_LeafBack();
+
+        FogEnable = false;
+        ZEnable = true;
+        ZWriteEnable = true;
+        
+        CullMode = CW;
+        
+        // enable alpha blending
+        AlphaBlendEnable = true;
+        SrcBlend = SrcAlpha;
+        DestBlend = InvSrcAlpha;
+        
+        AlphaTestEnable = true;
+        AlphaFunc = GreaterEqual;
+        AlphaRef = 0x80;
+    }
+
+}
