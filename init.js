@@ -548,6 +548,7 @@ function onDocumentMouseDown( event ) {
         render();
     }
 }
+
 function onDocumentKeyDown( event ) {
     switch( event.keyCode ) {
         case 16: isShiftDown = true; break;
